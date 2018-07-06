@@ -1,7 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Filename: color.ps
 ////////////////////////////////////////////////////////////////////////////////
-
+Texture2D shaderTexture;
+SamplerState SampleType;
 
 //////////////
 // TYPEDEFS //
@@ -9,7 +10,8 @@
 struct PixelInputType
 {
     float4 position : SV_POSITION;
-    float4 color : COLOR;
+    //float4 color : COLOR;
+	float2 tex : TEXCOORD0;
 };
 
 
@@ -18,5 +20,8 @@ struct PixelInputType
 ////////////////////////////////////////////////////////////////////////////////
 float4 ColorPixelShader(PixelInputType input) : SV_TARGET
 {
-    return input.color;
+    float4 textureColor;
+    textureColor = shaderTexture.Sample(SampleType, input.tex);
+   //return input.color;
+    return textureColor;
 }
