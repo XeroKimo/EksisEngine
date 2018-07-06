@@ -101,6 +101,11 @@ HWND EWindow::GetClientHandle()
 	return m_hWnd;
 }
 
+HINSTANCE EWindow::GetClientInstance()
+{
+	return m_hInstance;
+}
+
 EMatrix EWindow::GetOrthoMatrix()
 {
 	return m_orthoMatrix;

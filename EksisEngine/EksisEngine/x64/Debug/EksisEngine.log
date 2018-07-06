@@ -1,0 +1,3 @@
+﻿  EksisEngine.cpp
+f:\documents\github\eksisengine-nick-stable\eksisengine\eksisengine\eksisengine.cpp(93): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+  EksisEngine.vcxproj -> F:\Documents\GitHub\EksisEngine-Nick-Stable\EksisEngine\x64\Debug\EksisEngine.exe
