@@ -78,7 +78,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>dxgi.lib; d3d11.lib; d3dcompiler.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>windowscodecs.lib;dxgi.lib; d3d11.lib; d3dcompiler.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -125,18 +125,24 @@
     <ClCompile Include="EMesh.cpp" />
     <ClCompile Include="ERenderable.cpp" />
     <ClCompile Include="EShader.cpp" />
+    <ClCompile Include="ESprite.cpp" />
     <ClCompile Include="ESquare.cpp" />
+    <ClCompile Include="ETexture.cpp" />
+    <ClCompile Include="ETextureManager.cpp" />
     <ClCompile Include="EVector.cpp" />
     <ClCompile Include="EWindow.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ERenderable.h" />
     <ClInclude Include="ED3DHelper.h" />
     <ClInclude Include="EDirectXHelper.h" />
     <ClInclude Include="EksisEngine.h" />
     <ClInclude Include="EMesh.h" />
-    <ClInclude Include="ERenderable.h" />
+    <ClInclude Include="ESprite.h" />
     <ClInclude Include="ESquare.h" />
+    <ClInclude Include="ETexture.h" />
+    <ClInclude Include="ETextureManager.h" />
     <ClInclude Include="EVector.h" />
     <ClInclude Include="EWindow.h" />
     <ClInclude Include="EMatrix.h" />

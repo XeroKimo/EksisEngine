@@ -1,0 +1,7 @@
+﻿  GameScreen.cpp
+c:\users\renzy\desktop\eksis engine code\experimental\eksisengine\eksisengine\gamescreen.cpp(38): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\renzy\desktop\eksis engine code\experimental\eksisengine\eksisengine\gamescreen.cpp(40): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  ECamera.cpp
+c:\users\renzy\desktop\eksis engine code\experimental\eksisengine\eksisengine\ecamera.cpp(6): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
+  EksisEngine.vcxproj -> C:\Users\Renzy\Desktop\Eksis Engine Code\Experimental\EksisEngine\Debug\EksisEngine.exe

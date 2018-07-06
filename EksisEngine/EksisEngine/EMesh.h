@@ -10,6 +10,14 @@ public:
 
 	float r, g, b, a;
 };
+class TexVector
+{
+public:
+	TexVector();
+	TexVector(float r, float g);
+
+	float u, v;
+};
 
 class EMesh
 {
@@ -19,13 +27,17 @@ public:
 	bool Initialize(float width, float height);
 	void Destroy();
 	void Render();
+	void SetColor(float red, float green, float blue, float alpha = 1.0f);
 	int GetIndexCount();
 private:
 	struct VertexType
 	{
 		EVector position;
-		ColorVector color;
+		TexVector tex;
+		//ColorVector color;
 	};
+	VertexType* m_vertices;
 	ID3D11Buffer *m_vertexBuffer, *m_indexBuffer;
 	int m_vertexCount, m_indexCount;
+	bool m_texture;
 };

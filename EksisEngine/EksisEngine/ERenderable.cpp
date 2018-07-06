@@ -1,6 +1,9 @@
 #include "ERenderable.h"
 
-ERenderable::ERenderable()
+ERenderable::ERenderable():
+	m_position(EVector(0.0f, 0.0f)),
+	m_origin(EVector(0.0f, 0.0f)),
+	m_scale(EVector(1.0f, 1.0f))
 {
 }
 
@@ -15,6 +18,12 @@ ERenderable::ERenderable(float width, float height):
 
 ERenderable::~ERenderable()
 {
+}
+
+void ERenderable::Initialize(float width, float height)
+{
+	m_width = width;
+	m_height = height;
 }
 
 void ERenderable::SetPosition(float x, float y)
@@ -62,5 +71,5 @@ EMatrix ERenderable::GetMatrix()
 	position.SetPosition(EVector(m_position.x, m_position.y));
 	EMatrix scale;
 	scale.SetScale(EVector(m_scale.x, m_scale.y));
-	return position * rotation * anchor * scale;
+	return position *  rotation * anchor * scale;
 }
