@@ -12,3 +12,6 @@ Stable: Is shareable, must be updated when your current goal has been reached, o
 Experimental: Do whatever the fuck you want
 	
 	Note: Document any major functionality or requested functionality. Also document added files and files that were changed or deleted
+
+
+It appears that library linking doesn't carry over, if that's the case, make sure to include d3d11.lib, D3DCompiler.lib and Windowscodecs.lib

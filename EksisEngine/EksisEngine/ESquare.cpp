@@ -2,6 +2,8 @@
 #include "EMesh.h"
 #include "EksisEngine.h"
 
+#include <iostream>			// remove this later
+
 ESquare::ESquare(float width, float height) :
 	ERenderable(width,height),
 	m_display(true)

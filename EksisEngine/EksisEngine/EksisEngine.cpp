@@ -37,8 +37,28 @@ bool EksisEngine::Run()
 		
 		MSG msg;
 		bool done = false;
+
 		while (!done)
 		{
+			m_input->PollInput();
+
+			if (m_input->GetState(EKeyCode::A) == KEY_DOWN)
+			{
+				m_x += 1;
+			}
+			if (m_input->GetState(EKeyCode::D) == KEY_DOWN)
+			{
+				m_x -= 1;
+			}
+			if (m_input->GetState(EKeyCode::S) == KEY_DOWN)
+			{
+				m_y += 1;
+			}
+			if (m_input->GetState(EKeyCode::W) == KEY_DOWN)
+			{
+				m_y -= 1;
+			}
+
 			if (PeekMessage(&msg, NULL, NULL, NULL,PM_REMOVE))
 			{
 				TranslateMessage(&msg);
@@ -56,6 +76,9 @@ bool EksisEngine::Run()
 				m_D3DHelper->BeginRender(0.0f, 0.0f, 0.0f);
 				m_camera->Render();
 				EScreenManager::GetInstance()->GetCurrentScreen()->Render();
+
+				EVector mousePosition = EVector(m_input->GetMouse()->GetCursor()->x, m_input->GetMouse()->GetCursor()->y);
+				EVector squarePosition = EVector(m_x, m_y);
 				m_D3DHelper->EndRender();
 				EScreenManager::GetInstance()->GetCurrentScreen()->Input();
 			}
@@ -87,6 +110,10 @@ bool EksisEngine::Initialize()
 		MessageBox(m_window->GetClientHandle(), L"Shader Init", L"failed to initialize", MB_OK);
 		return false;
 	}
+
+	m_input = new EInput();
+
+
 	m_textureManager = new ETextureManager();
 	m_textureManager->Initialize();
 	m_camera = new ECamera();
@@ -99,6 +126,7 @@ bool EksisEngine::Initialize()
 void EksisEngine::Shutdown()
 {
 	m_textureManager->Shutdown();
+	m_input->Shutdown();
 	m_shader->Shutdown();
 	m_D3DHelper->Shutdown();
 	m_window->Shutdown();
