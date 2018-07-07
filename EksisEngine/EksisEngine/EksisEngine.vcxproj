@@ -42,7 +42,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -78,7 +78,8 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>windowscodecs.lib;dxgi.lib; d3d11.lib; d3dcompiler.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;D3DCompiler.lib;Windowscodecs.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;</AdditionalDependencies>
+
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -88,6 +89,9 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>d3d11.lib;D3DCompiler.lib;Windowscodecs.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -118,11 +122,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EController.cpp" />
     <ClCompile Include="ED3DHelper.cpp" />
     <ClCompile Include="EDirectXHelper.cpp" />
+    <ClCompile Include="EInput.cpp" />
+    <ClCompile Include="EKeyboard.cpp" />
     <ClCompile Include="EksisEngine.cpp" />
     <ClCompile Include="EMatrix.cpp" />
     <ClCompile Include="EMesh.cpp" />
+    <ClCompile Include="EMouse.cpp" />
     <ClCompile Include="ERenderable.cpp" />
     <ClCompile Include="EShader.cpp" />
     <ClCompile Include="ESprite.cpp" />
@@ -134,11 +142,17 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EController.h" />
     <ClInclude Include="ERenderable.h" />
     <ClInclude Include="ED3DHelper.h" />
     <ClInclude Include="EDirectXHelper.h" />
+    <ClInclude Include="EInput.h" />
+    <ClInclude Include="EKeyboard.h" />
+    <ClInclude Include="EKeyCodes.h" />
     <ClInclude Include="EksisEngine.h" />
     <ClInclude Include="EMesh.h" />
+    <ClInclude Include="EMouse.h" />
+    <ClInclude Include="ERenderable.h" />
     <ClInclude Include="ESprite.h" />
     <ClInclude Include="ESquare.h" />
     <ClInclude Include="ETexture.h" />

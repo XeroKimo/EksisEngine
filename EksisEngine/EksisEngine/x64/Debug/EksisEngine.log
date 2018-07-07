@@ -1,0 +1,6 @@
+﻿  EInput.cpp
+  EMouse.cpp
+  EksisEngine.cpp
+f:\documents\github\eksisengine\eksisengine\eksisengine\eksisengine.cpp(74): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+  Generating Code...
+  EksisEngine.vcxproj -> F:\Documents\GitHub\EksisEngine\EksisEngine\x64\Debug\EksisEngine.exe

@@ -31,6 +31,11 @@
     <Filter Include="Source Files\Math">
       <UniqueIdentifier>{b9e36ecf-1272-422f-8048-df36443514e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{6dbf4ac8-0d03-4f9b-94d1-d01d36ee4547}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{690a249a-6dfb-44e5-9e6d-b0462bc981d4}</UniqueIdentifier>
     <Filter Include="Header Files\Managers">
       <UniqueIdentifier>{ebd823e9-451f-4277-ac99-0a623246bb00}</UniqueIdentifier>
     </Filter>
@@ -72,6 +77,17 @@
     <ClCompile Include="ERenderable.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="EInput.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="EKeyboard.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="EMouse.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="EController.cpp">
+      <Filter>Source Files\Input</Filter>
     <ClCompile Include="ETexture.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
@@ -113,6 +129,20 @@
     <ClInclude Include="ERenderable.h">
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="EKeyCodes.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="EInput.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="EKeyboard.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="EMouse.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="EController.h">
+      <Filter>Header Files\Input</Filter>
     <ClInclude Include="ETexture.h">
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
