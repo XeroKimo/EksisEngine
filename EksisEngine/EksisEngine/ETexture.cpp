@@ -17,12 +17,14 @@ bool ETexture::Initialize(const wchar_t * fileName)
 	HRESULT hResult;
 	unsigned int rowPitch;
 	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
+	IWICFormatConverter* wicConverter = nullptr;
+
+	bool imageConverted = false;
 
 	IWICImagingFactory *wicFactory = nullptr;
 	CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER, IID_IWICImagingFactory, (LPVOID*)&wicFactory);
 
 	IWICBitmapDecoder *wicDecoder = nullptr;
-
 	hResult = wicFactory->CreateDecoderFromFilename(fileName, NULL, GENERIC_READ, WICDecodeMetadataCacheOnLoad, &wicDecoder);
 	if (FAILED(hResult))
 	{
@@ -39,7 +41,7 @@ bool ETexture::Initialize(const wchar_t * fileName)
 	wicFrame->GetSize(&m_textureWidth, &m_textureHeight);
 
 	WICPixelFormatGUID wicFormat;
-	hResult=wicFrame->GetPixelFormat(&wicFormat);
+	hResult = wicFrame->GetPixelFormat(&wicFormat);
 	if (FAILED(hResult))
 	{
 		return false;
@@ -53,19 +55,58 @@ bool ETexture::Initialize(const wchar_t * fileName)
 			dxFormat = g_WICFormats[i].format;
 			i = 9;
 		}
-		if (i == 8 && dxFormat!=g_WICFormats[8].format)
+		if (i == 8)
 		{
 			dxFormat = DXGI_FORMAT_UNKNOWN;
 		}
 	}
 
+	if (dxFormat == DXGI_FORMAT_UNKNOWN)
+	{
+		// get a dxgi compatible wic format from the current image format
+		WICPixelFormatGUID convertToPixelFormat = GetConvertToWICFormat(wicFormat);
+
+		// return if no dxgi compatible format was found
+		if (convertToPixelFormat == GUID_WICPixelFormatDontCare) return 0;
+
+		// set the dxgi format
+		for (int i = 0; i < 9; i++)
+		{
+			if (wicFormat == g_WICFormats[i].wic)
+			{
+				dxFormat = g_WICFormats[i].format;
+				i = 9;
+			}
+		}// create the format converter
+		hResult = wicFactory->CreateFormatConverter(&wicConverter);
+		if (FAILED(hResult)) return 0;
+
+		// make sure we can convert to the dxgi compatible format
+		BOOL canConvert = FALSE;
+		hResult = wicConverter->CanConvert(wicFormat, convertToPixelFormat, &canConvert);
+		if (FAILED(hResult) || !canConvert) return 0;
+
+		// do the conversion (wicConverter will contain the converted image)
+		hResult = wicConverter->Initialize(wicFrame, convertToPixelFormat, WICBitmapDitherTypeErrorDiffusion, 0, 0, WICBitmapPaletteTypeCustom);
+		if (FAILED(hResult)) return 0;
+
+		// this is so we know to get the image data from the wicConverter (otherwise we will get from wicFrame)
+		imageConverted = true;
+	}
 	int bitsPerPixel = GetDXGIFormatBitsPerPixel(dxFormat);
 	int bytesPerRow = (m_textureWidth * bitsPerPixel) / 8; // number of bytes in each row of the image data
 	int imageSize = bytesPerRow * m_textureHeight; // total image size in bytes
 
 												 // allocate enough memory for the raw image data, and set imageData to point to that memory
 	BYTE *imageData = (BYTE*)malloc(imageSize);
-	wicFrame->CopyPixels(NULL, bytesPerRow, imageSize, imageData);
+	if (!imageConverted)
+	{
+		wicFrame->CopyPixels(NULL, bytesPerRow, imageSize, imageData);
+	}
+	else
+	{
+		wicConverter->CopyPixels(NULL, bytesPerRow, imageSize, imageData);
+	}
 
 
 
@@ -114,16 +155,17 @@ bool ETexture::Initialize(const wchar_t * fileName)
 
 }
 
+
 void ETexture::Shutdown()
 {
 	if (m_texture)
 	{
-		delete m_texture;
+		m_texture->Release();
 		m_texture = nullptr;
 	}
 	if (m_textureView)
 	{
-		delete m_textureView;
+		m_textureView->Release();
 		m_textureView = nullptr;
 	}
 }
@@ -151,6 +193,56 @@ int ETexture::GetDXGIFormatBitsPerPixel(DXGI_FORMAT & dxgiFormat)
 	else if (dxgiFormat == DXGI_FORMAT_R16_UNORM) return 16;
 	else if (dxgiFormat == DXGI_FORMAT_R8_UNORM) return 8;
 	else if (dxgiFormat == DXGI_FORMAT_A8_UNORM) return 8;
+	else return 0;
+}
+
+// get a dxgi compatible wic format from another wic format
+WICPixelFormatGUID ETexture::GetConvertToWICFormat(WICPixelFormatGUID& wicFormatGUID)
+{
+	if (wicFormatGUID == GUID_WICPixelFormatBlackWhite) return GUID_WICPixelFormat8bppGray;
+	else if (wicFormatGUID == GUID_WICPixelFormat1bppIndexed) return GUID_WICPixelFormat32bppRGBA;
+	else if (wicFormatGUID == GUID_WICPixelFormat2bppIndexed) return GUID_WICPixelFormat32bppRGBA;
+	else if (wicFormatGUID == GUID_WICPixelFormat4bppIndexed) return GUID_WICPixelFormat32bppRGBA;
+	else if (wicFormatGUID == GUID_WICPixelFormat8bppIndexed) return GUID_WICPixelFormat32bppRGBA;
+	else if (wicFormatGUID == GUID_WICPixelFormat2bppGray) return GUID_WICPixelFormat8bppGray;
+	else if (wicFormatGUID == GUID_WICPixelFormat4bppGray) return GUID_WICPixelFormat8bppGray;
+	else if (wicFormatGUID == GUID_WICPixelFormat16bppGrayFixedPoint) return GUID_WICPixelFormat16bppGrayHalf;
+	else if (wicFormatGUID == GUID_WICPixelFormat32bppGrayFixedPoint) return GUID_WICPixelFormat32bppGrayFloat;
+	else if (wicFormatGUID == GUID_WICPixelFormat16bppBGR555) return GUID_WICPixelFormat16bppBGRA5551;
+	else if (wicFormatGUID == GUID_WICPixelFormat32bppBGR101010) return GUID_WICPixelFormat32bppRGBA1010102;
+	else if (wicFormatGUID == GUID_WICPixelFormat24bppBGR) return GUID_WICPixelFormat32bppRGBA;
+	else if (wicFormatGUID == GUID_WICPixelFormat24bppRGB) return GUID_WICPixelFormat32bppRGBA;
+	else if (wicFormatGUID == GUID_WICPixelFormat32bppPBGRA) return GUID_WICPixelFormat32bppRGBA;
+	else if (wicFormatGUID == GUID_WICPixelFormat32bppPRGBA) return GUID_WICPixelFormat32bppRGBA;
+	else if (wicFormatGUID == GUID_WICPixelFormat48bppRGB) return GUID_WICPixelFormat64bppRGBA;
+	else if (wicFormatGUID == GUID_WICPixelFormat48bppBGR) return GUID_WICPixelFormat64bppRGBA;
+	else if (wicFormatGUID == GUID_WICPixelFormat64bppBGRA) return GUID_WICPixelFormat64bppRGBA;
+	else if (wicFormatGUID == GUID_WICPixelFormat64bppPRGBA) return GUID_WICPixelFormat64bppRGBA;
+	else if (wicFormatGUID == GUID_WICPixelFormat64bppPBGRA) return GUID_WICPixelFormat64bppRGBA;
+	else if (wicFormatGUID == GUID_WICPixelFormat48bppRGBFixedPoint) return GUID_WICPixelFormat64bppRGBAHalf;
+	else if (wicFormatGUID == GUID_WICPixelFormat48bppBGRFixedPoint) return GUID_WICPixelFormat64bppRGBAHalf;
+	else if (wicFormatGUID == GUID_WICPixelFormat64bppRGBAFixedPoint) return GUID_WICPixelFormat64bppRGBAHalf;
+	else if (wicFormatGUID == GUID_WICPixelFormat64bppBGRAFixedPoint) return GUID_WICPixelFormat64bppRGBAHalf;
+	else if (wicFormatGUID == GUID_WICPixelFormat64bppRGBFixedPoint) return GUID_WICPixelFormat64bppRGBAHalf;
+	else if (wicFormatGUID == GUID_WICPixelFormat64bppRGBHalf) return GUID_WICPixelFormat64bppRGBAHalf;
+	else if (wicFormatGUID == GUID_WICPixelFormat48bppRGBHalf) return GUID_WICPixelFormat64bppRGBAHalf;
+	else if (wicFormatGUID == GUID_WICPixelFormat128bppPRGBAFloat) return GUID_WICPixelFormat128bppRGBAFloat;
+	else if (wicFormatGUID == GUID_WICPixelFormat128bppRGBFloat) return GUID_WICPixelFormat128bppRGBAFloat;
+	else if (wicFormatGUID == GUID_WICPixelFormat128bppRGBAFixedPoint) return GUID_WICPixelFormat128bppRGBAFloat;
+	else if (wicFormatGUID == GUID_WICPixelFormat128bppRGBFixedPoint) return GUID_WICPixelFormat128bppRGBAFloat;
+	else if (wicFormatGUID == GUID_WICPixelFormat32bppRGBE) return GUID_WICPixelFormat128bppRGBAFloat;
+	else if (wicFormatGUID == GUID_WICPixelFormat32bppCMYK) return GUID_WICPixelFormat32bppRGBA;
+	else if (wicFormatGUID == GUID_WICPixelFormat64bppCMYK) return GUID_WICPixelFormat64bppRGBA;
+	else if (wicFormatGUID == GUID_WICPixelFormat40bppCMYKAlpha) return GUID_WICPixelFormat64bppRGBA;
+	else if (wicFormatGUID == GUID_WICPixelFormat80bppCMYKAlpha) return GUID_WICPixelFormat64bppRGBA;
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8) || defined(_WIN7_PLATFORM_UPDATE)
+	else if (wicFormatGUID == GUID_WICPixelFormat32bppRGB) return GUID_WICPixelFormat32bppRGBA;
+	else if (wicFormatGUID == GUID_WICPixelFormat64bppRGB) return GUID_WICPixelFormat64bppRGBA;
+	else if (wicFormatGUID == GUID_WICPixelFormat64bppPRGBAHalf) return GUID_WICPixelFormat64bppRGBAHalf;
+#endif
+
+	else return GUID_WICPixelFormatDontCare;
 }
 
 UINT ETexture::GetHeight()

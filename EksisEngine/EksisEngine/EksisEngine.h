@@ -3,6 +3,8 @@
 #include "EShader.h"
 #include "EWindow.h"
 #include "ETextureManager.h"
+#include "EEngineTimer.h"
+#include "ECamera.h"
 
 class EksisEngine
 {
@@ -15,6 +17,7 @@ public:
 	EShader* GetShader();
 	EWindow* GetWindow();
 	ETextureManager* GetTextureManager();
+	ECamera* GetCamera();
 
 private:
 	EksisEngine();
@@ -26,9 +29,12 @@ private:
 	ED3DHelper* m_D3DHelper;
 	EShader * m_shader;
 	ETextureManager* m_textureManager;
+	EEngineTimer m_engineTimer;
+	ECamera* m_camera;
 };
 
-float GetClientHeight();
-float GetClientWidth();
-void Load(const wchar_t* imageFile);
-void Unload(const wchar_t* imageFile);
+int GetClientHeight();
+int GetClientWidth();
+void LoadTexture(const wchar_t* imageFile);
+void UnloadTexture(const wchar_t* imageFile);
+ECamera* GetCamera();

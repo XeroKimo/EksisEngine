@@ -11,10 +11,11 @@ bool EShader::Initialize(HWND hWnd, const wchar_t * vsFile, const wchar_t * psFi
 	ID3D10Blob* errorMessage;
 	ID3D10Blob* vertexShaderBuffer;
 	ID3D10Blob* pixelShaderBuffer;
-	D3D11_INPUT_ELEMENT_DESC polygonLayout[2];
+	D3D11_INPUT_ELEMENT_DESC polygonLayout[3];
 	unsigned int numElements;
 	D3D11_BUFFER_DESC matrixBufferDesc;
-	D3D11_SAMPLER_DESC samplerDesc;
+	D3D11_SAMPLER_DESC samplerDesc;  
+	D3D11_BLEND_DESC blendDesc;
 
 	errorMessage = nullptr;
 	vertexShaderBuffer = nullptr;
@@ -72,21 +73,21 @@ bool EShader::Initialize(HWND hWnd, const wchar_t * vsFile, const wchar_t * psFi
 	polygonLayout[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 	polygonLayout[0].InstanceDataStepRate = 0;
 
-	//polygonLayout[1].SemanticName = "COLOR";
-	//polygonLayout[1].SemanticIndex = 0;
-	//polygonLayout[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	//polygonLayout[1].InputSlot = 0;
-	//polygonLayout[1].AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
-	//polygonLayout[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
-	//polygonLayout[1].InstanceDataStepRate = 0;
-
-	polygonLayout[1].SemanticName = "TEXCOORD";
+	polygonLayout[1].SemanticName = "COLOR";
 	polygonLayout[1].SemanticIndex = 0;
-	polygonLayout[1].Format = DXGI_FORMAT_R32G32_FLOAT;
+	polygonLayout[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 	polygonLayout[1].InputSlot = 0;
 	polygonLayout[1].AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
 	polygonLayout[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 	polygonLayout[1].InstanceDataStepRate = 0;
+
+	polygonLayout[2].SemanticName = "TEXCOORD";
+	polygonLayout[2].SemanticIndex = 0;
+	polygonLayout[2].Format = DXGI_FORMAT_R32G32_FLOAT;
+	polygonLayout[2].InputSlot = 0;
+	polygonLayout[2].AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
+	polygonLayout[2].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+	polygonLayout[2].InstanceDataStepRate = 0;
 
 	numElements = sizeof(polygonLayout) / sizeof(polygonLayout[0]);
 
@@ -131,6 +132,22 @@ bool EShader::Initialize(HWND hWnd, const wchar_t * vsFile, const wchar_t * psFi
 
 	// Create the texture sampler state.
 	result = EksisEngine::GetInstance()->GetD3DHelper()->GetDevice()->CreateSamplerState(&samplerDesc, &m_sampleState);
+	if (FAILED(result))
+	{
+		return false;
+	}
+	blendDesc.AlphaToCoverageEnable = true;
+	blendDesc.IndependentBlendEnable = false;
+	blendDesc.RenderTarget[0].BlendEnable = true;
+	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ZERO;
+	blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	result = EksisEngine::GetInstance()->GetD3DHelper()->GetDevice()->CreateBlendState(&blendDesc, &m_blendState);
 	if (FAILED(result))
 	{
 		return false;
@@ -191,6 +208,7 @@ void EShader::Render(int indexCount, ID3D11ShaderResourceView* texture)
 	EksisEngine::GetInstance()->GetD3DHelper()->GetDeviceContext()->IASetInputLayout(m_layout);
 	EksisEngine::GetInstance()->GetD3DHelper()->GetDeviceContext()->VSSetShader(m_vertexShader, NULL, 0);
 	EksisEngine::GetInstance()->GetD3DHelper()->GetDeviceContext()->PSSetShader(m_pixelShader, NULL, 0);
+	EksisEngine::GetInstance()->GetD3DHelper()->GetDeviceContext()->OMSetBlendState(m_blendState, 0, 0xffffffff);
 
 	EksisEngine::GetInstance()->GetD3DHelper()->GetDeviceContext()->DrawIndexed(indexCount, 0, 0);
 

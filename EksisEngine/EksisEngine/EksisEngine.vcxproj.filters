@@ -13,118 +13,185 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Core">
+    <Filter Include="Header Files\Engine">
+      <UniqueIdentifier>{531ff64e-3d6d-4844-b3c4-3cdece358d76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Core">
       <UniqueIdentifier>{9a22906d-b9d5-4f6e-9659-75154431c707}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Core">
-      <UniqueIdentifier>{f9f45cd8-2dde-4237-848a-c4d003ed14ba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Rendering">
-      <UniqueIdentifier>{c9698d71-0ec2-4217-be6a-8944a5816029}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Rendering">
-      <UniqueIdentifier>{327bc62d-5b62-4893-93c4-2db344037ba3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Math">
-      <UniqueIdentifier>{4ec04ab8-73af-433c-bb98-d0bfbb3c1611}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Math">
-      <UniqueIdentifier>{b9e36ecf-1272-422f-8048-df36443514e6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Managers">
+    <Filter Include="Header Files\Engine\Managers">
       <UniqueIdentifier>{ebd823e9-451f-4277-ac99-0a623246bb00}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Managers">
+    <Filter Include="Header Files\Engine\Math">
+      <UniqueIdentifier>{4ec04ab8-73af-433c-bb98-d0bfbb3c1611}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Rendering">
+      <UniqueIdentifier>{c9698d71-0ec2-4217-be6a-8944a5816029}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Shaders">
+      <UniqueIdentifier>{20b460c5-6171-4a6b-a23b-ebe8e68e9b81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{adb768b6-d7c3-4625-8df5-382d6dca0ede}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Core">
+      <UniqueIdentifier>{f9f45cd8-2dde-4237-848a-c4d003ed14ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Managers">
       <UniqueIdentifier>{8d7ca047-9afb-42f3-8759-6f4756c58ce1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Math">
+      <UniqueIdentifier>{b9e36ecf-1272-422f-8048-df36443514e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Rendering">
+      <UniqueIdentifier>{327bc62d-5b62-4893-93c4-2db344037ba3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{0682a53a-c21e-4586-90f6-2eeca08c0495}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Screens">
+      <UniqueIdentifier>{f711be1d-2391-459c-982a-c8122a77c0c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{5de1d069-5876-415f-8985-0556ed824c83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Screens">
+      <UniqueIdentifier>{5ca32b79-2f85-429e-87cb-5442f29c92c9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
-      <Filter>Source Files\Core</Filter>
+      <Filter>Source Files\Engine\Core</Filter>
     </ClCompile>
     <ClCompile Include="EksisEngine.cpp">
-      <Filter>Source Files\Core</Filter>
+      <Filter>Source Files\Engine\Core</Filter>
     </ClCompile>
     <ClCompile Include="EWindow.cpp">
-      <Filter>Source Files\Core</Filter>
+      <Filter>Source Files\Engine\Core</Filter>
     </ClCompile>
     <ClCompile Include="EDirectXHelper.cpp">
-      <Filter>Source Files\Core</Filter>
+      <Filter>Source Files\Engine\Core</Filter>
     </ClCompile>
     <ClCompile Include="ED3DHelper.cpp">
-      <Filter>Source Files\Core</Filter>
+      <Filter>Source Files\Engine\Core</Filter>
     </ClCompile>
     <ClCompile Include="EVector.cpp">
-      <Filter>Source Files\Math</Filter>
+      <Filter>Source Files\Engine\Math</Filter>
     </ClCompile>
     <ClCompile Include="EMesh.cpp">
-      <Filter>Source Files\Rendering</Filter>
+      <Filter>Source Files\Engine\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="EMatrix.cpp">
-      <Filter>Source Files\Math</Filter>
+      <Filter>Source Files\Engine\Math</Filter>
     </ClCompile>
     <ClCompile Include="EShader.cpp">
-      <Filter>Source Files\Rendering</Filter>
+      <Filter>Source Files\Engine\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="ESquare.cpp">
-      <Filter>Source Files\Rendering</Filter>
+      <Filter>Source Files\Engine\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="ERenderable.cpp">
-      <Filter>Source Files\Rendering</Filter>
+      <Filter>Source Files\Engine\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="ETexture.cpp">
-      <Filter>Source Files\Rendering</Filter>
+      <Filter>Source Files\Engine\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="ESprite.cpp">
-      <Filter>Source Files\Rendering</Filter>
+      <Filter>Source Files\Engine\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="ETextureManager.cpp">
-      <Filter>Source Files\Managers</Filter>
+      <Filter>Source Files\Engine\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="EEngineTimer.cpp">
+      <Filter>Source Files\Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Screen.cpp">
+      <Filter>Source Files\Game\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="EScreenManager.cpp">
+      <Filter>Source Files\Engine\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScreen.cpp">
+      <Filter>Source Files\Game\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="ScreenInit.cpp">
+      <Filter>Source Files\Game\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="ECamera.cpp">
+      <Filter>Source Files\Engine\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EksisEngine.h">
-      <Filter>Header Files\Core</Filter>
+      <Filter>Header Files\Engine\Core</Filter>
     </ClInclude>
     <ClInclude Include="EWindow.h">
-      <Filter>Header Files\Core</Filter>
+      <Filter>Header Files\Engine\Core</Filter>
     </ClInclude>
     <ClInclude Include="EDirectXHelper.h">
-      <Filter>Header Files\Core</Filter>
+      <Filter>Header Files\Engine\Core</Filter>
     </ClInclude>
     <ClInclude Include="ED3DHelper.h">
-      <Filter>Header Files\Core</Filter>
+      <Filter>Header Files\Engine\Core</Filter>
     </ClInclude>
     <ClInclude Include="EMesh.h">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Engine\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="EVector.h">
-      <Filter>Header Files\Math</Filter>
+      <Filter>Header Files\Engine\Math</Filter>
     </ClInclude>
     <ClInclude Include="EMatrix.h">
-      <Filter>Header Files\Math</Filter>
+      <Filter>Header Files\Engine\Math</Filter>
     </ClInclude>
     <ClInclude Include="EShader.h">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Engine\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="ESquare.h">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Engine\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="ERenderable.h">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Engine\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="ETexture.h">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Engine\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="ESprite.h">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Engine\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="ETextureManager.h">
-      <Filter>Header Files\Managers</Filter>
+      <Filter>Header Files\Engine\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="EEngineTimer.h">
+      <Filter>Header Files\Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="EScreenManager.h">
+      <Filter>Header Files\Engine\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen.h">
+      <Filter>Header Files\Game\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScreen.h">
+      <Filter>Header Files\Game\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenInit.h">
+      <Filter>Header Files\Game\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineFiles.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ECamera.h">
+      <Filter>Header Files\Engine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="EMath.h">
+      <Filter>Header Files\Engine\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="color.ps" />
-    <None Include="color.vs" />
+    <None Include="texture.ps">
+      <Filter>Header Files\Engine\Shaders</Filter>
+    </None>
+    <None Include="texture.vs">
+      <Filter>Header Files\Engine\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
