@@ -2,10 +2,11 @@
 
 #include "ED3DHelper.h"
 #include "EShader.h"
-#include "EWindow.h"
+#include "EWindow.h
 #include "EInput.h"
 
 #include "EKeyCodes.h"
+#include "ETextureManager.h"
 
 class EksisEngine
 {
@@ -17,6 +18,7 @@ public:
 	ED3DHelper* GetD3DHelper();
 	EShader* GetShader();
 	EWindow* GetWindow();
+	ETextureManager* GetTextureManager();
 
 private:
 	EksisEngine();
@@ -34,3 +36,10 @@ private:
 	float m_x = 0;
 	float m_y = 0;
 };
+	ETextureManager* m_textureManager;
+};
+
+float GetClientHeight();
+float GetClientWidth();
+void Load(const wchar_t* imageFile);
+void Unload(const wchar_t* imageFile);

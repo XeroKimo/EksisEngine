@@ -36,6 +36,11 @@
     </Filter>
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{690a249a-6dfb-44e5-9e6d-b0462bc981d4}</UniqueIdentifier>
+    <Filter Include="Header Files\Managers">
+      <UniqueIdentifier>{ebd823e9-451f-4277-ac99-0a623246bb00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Managers">
+      <UniqueIdentifier>{8d7ca047-9afb-42f3-8759-6f4756c58ce1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -83,6 +88,14 @@
     </ClCompile>
     <ClCompile Include="EController.cpp">
       <Filter>Source Files\Input</Filter>
+    <ClCompile Include="ETexture.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="ESprite.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="ETextureManager.cpp">
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +143,14 @@
     </ClInclude>
     <ClInclude Include="EController.h">
       <Filter>Header Files\Input</Filter>
+    <ClInclude Include="ETexture.h">
+      <Filter>Header Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="ESprite.h">
+      <Filter>Header Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="ETextureManager.h">
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

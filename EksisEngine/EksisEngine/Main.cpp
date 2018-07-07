@@ -10,5 +10,6 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 #endif
 {
 	EksisEngine::GetInstance()->Run();
+	EksisEngine::GetInstance()->Shutdown();
 	system("PAUSE");
 }

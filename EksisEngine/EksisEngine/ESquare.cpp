@@ -32,7 +32,12 @@ void ESquare::Render()
 	EksisEngine::GetInstance()->GetShader()->SetModel(GetMatrix());
 	EksisEngine::GetInstance()->GetShader()->SetView(EMatrix::Identity());
 	EksisEngine::GetInstance()->GetShader()->SetOrtho(EksisEngine::GetInstance()->GetWindow()->GetOrthoMatrix());
-	EksisEngine::GetInstance()->GetShader()->Render(m_mesh->GetIndexCount());
+	EksisEngine::GetInstance()->GetShader()->Render(m_mesh->GetIndexCount(),NULL);
+}
+
+void ESquare::SetColor(float r, float g, float b, float a)
+{
+	m_mesh->SetColor(r, g, b, a);
 }
 
 

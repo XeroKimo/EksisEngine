@@ -1,6 +1,7 @@
 #include "EksisEngine.h"
 #include "EWindow.h"
 #include "ESquare.h"
+#include "ESprite.h"
 
 EksisEngine* EksisEngine::instance = nullptr;
 
@@ -33,7 +34,17 @@ bool EksisEngine::Run()
 	}
 	else
 	{
+		Load(L"Bank.png");
+		Load(L"asteroid.png");
 		ESquare test;
+		ESquare test3;
+		ESprite test2;
+		ESprite test4(L"asteroid.png");
+		test3.SetColor(1.0f, 0.0f, 0.0f);
+		test2.SetTexture(L"Bank.png");
+		float x, y;
+		x = y = 0.0f;
+		float radians = 0.0f;
 		MSG msg;
 		bool done = false;
 
@@ -69,6 +80,14 @@ bool EksisEngine::Run()
 			}
 			else
 			{
+				radians += 0.01f;
+				test.SetOrigin(0.5f, 0.5f);
+				test.SetPosition(640,360);
+				test.SetRotation(radians);
+				test.SetScale(3.0f, 0.5f);
+				test4.SetPosition(640, 360);
+				test4.SetOrigin(0.5f, 0.5f);
+				test4.SetRotation(radians);
 				m_D3DHelper->BeginRender(0.0f, 0.0f, 0.0f);
 
 				EVector mousePosition = EVector(m_input->GetMouse()->GetCursor()->x, m_input->GetMouse()->GetCursor()->y);
@@ -78,7 +97,12 @@ bool EksisEngine::Run()
 				test.SetOrigin(0, 1);
 
 				test.Render();
+		/*		test.Render();
+				test3.Render();*/
+				test4.Render();
+				test2.Render();
 				m_D3DHelper->EndRender();
+				Sleep(16);
 			}
 
 		}
@@ -112,35 +136,18 @@ bool EksisEngine::Initialize()
 
 	m_input = new EInput();
 
+
+	m_textureManager = new ETextureManager();
 	return true;
 }
 
 void EksisEngine::Shutdown()
 {
-	if (m_window)
-	{
-		m_window->Shutdown();
-		delete m_window;
-		m_window = nullptr;
-	}
-	if (m_D3DHelper)
-	{
-		m_D3DHelper->Shutdown();
-		delete m_D3DHelper;
-		m_D3DHelper = nullptr;
-	}
-	if (m_shader)
-	{
-		m_shader->Shutdown();
-		delete m_shader;
-		m_shader = nullptr;
-	}
-	if (m_input)
-	{
-		m_input->Shutdown();
-		delete m_input;
-		m_input = nullptr;
-	}
+	m_textureManager->Shutdown();
+	m_input->Shutdown();
+	m_shader->Shutdown();
+	m_D3DHelper->Shutdown();
+	m_window->Shutdown();
 }
 
 ED3DHelper * EksisEngine::GetD3DHelper()
@@ -156,4 +163,28 @@ EShader * EksisEngine::GetShader()
 EWindow * EksisEngine::GetWindow()
 {
 	return m_window;
+}
+
+ETextureManager * EksisEngine::GetTextureManager()
+{
+	return m_textureManager;
+}
+
+float GetClientHeight()
+{
+	return EksisEngine::GetInstance()->GetWindow()->GetClientHeight();
+}
+
+float GetClientWidth()
+{
+	return EksisEngine::GetInstance()->GetWindow()->GetClientWidth();
+}
+
+void Load(const wchar_t * imageFile)
+{
+	EksisEngine::GetInstance()->GetTextureManager()->Load(imageFile);
+}
+void Unload(const wchar_t * imageFile)
+{
+	EksisEngine::GetInstance()->GetTextureManager()->Unload(imageFile);
 }

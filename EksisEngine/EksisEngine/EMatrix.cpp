@@ -37,7 +37,6 @@ EMatrix EMatrix::operator*(EMatrix m)
 
 
 
-	return EMatrix();
 }
 
 void EMatrix::Transpose()
