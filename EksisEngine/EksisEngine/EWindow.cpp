@@ -50,14 +50,40 @@ int EWindow::Initialize(const wchar_t *name, int width, int height)
 	// NULL: this application does not have a menu bar  
 	// hInstance: the first parameter from WinMain  
 	// NULL: not used in this application  
+
+	RECT rect;
+	rect.left = 0;
+	rect.top = 0;
+	rect.right = width;
+	rect.bottom = height;
+	const DWORD dwstyle = WS_OVERLAPPEDWINDOW;
+	AdjustWindowRectEx(&rect, dwstyle, FALSE, 0);
+
 	int ScreenWidth = GetSystemMetrics(SM_CXSCREEN);
 	int ScreenHeight = GetSystemMetrics(SM_CYSCREEN);
-	m_hWnd = CreateWindowEx(WS_EX_APPWINDOW, name, name, WS_OVERLAPPEDWINDOW, (ScreenWidth - width) /2,(ScreenHeight - height) /2, width, height, NULL, NULL, m_hInstance, NULL);
+	m_hWnd = CreateWindowEx(WS_EX_APPWINDOW, 
+		name, 
+		name, 
+		dwstyle, 
+		(ScreenWidth - width) /2,
+		(ScreenHeight - height) /2, 
+		rect.right - rect.left, rect.bottom - rect.top,
+		NULL, 
+		NULL, 
+		m_hInstance, 
+		NULL);
 	if (!m_hWnd)
 	{
 		MessageBox(NULL, L"Error Making window", L"Win32 Guided Tour", NULL);
 		return 1;
 	}
+	RECT clientRectangle = {};
+	RECT windowRectangle = {};
+
+	GetClientRect(m_hWnd, &clientRectangle);
+	GetWindowRect(m_hWnd, &windowRectangle);
+
+
 	ShowWindow(m_hWnd, SW_SHOW);
 	SetForegroundWindow(m_hWnd);
 	SetFocus(m_hWnd);

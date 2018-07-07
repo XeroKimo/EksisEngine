@@ -1,0 +1,31 @@
+#pragma once
+#include "EPhysics.h"
+#include <vector>
+
+const float g_GRAVITY = -150.0f;
+
+class EPhysicsEngine
+{
+public:
+	EPhysicsEngine();
+
+	void Shutdown();
+
+	void SetPhysics(EPhysics* object);
+	void UnsetPhysics(EPhysics* object);
+
+	void Update(double delta);
+private:
+	std::vector<EPhysics*> m_gravityVector;
+	std::vector<EPhysics*> m_collidableVector;
+	std::vector<EPhysics*> m_moveableVector;
+private:
+	void ApplyGravity(double delta);
+	void DetectCollision(double delta);
+	void MoveObjects(double delta);
+	
+	void RemoveGravity(EPhysics* object);
+	void RemoveCollidable(EPhysics* object);
+	void RemoveMoveable(EPhysics* object);
+};
+

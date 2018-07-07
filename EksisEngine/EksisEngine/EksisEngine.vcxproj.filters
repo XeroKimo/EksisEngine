@@ -58,6 +58,12 @@
     <Filter Include="Header Files\Game\Screens">
       <UniqueIdentifier>{5ca32b79-2f85-429e-87cb-5442f29c92c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Core\Physics Engine">
+      <UniqueIdentifier>{a3a9a53f-0045-49c8-819c-8eea50d1e5d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Core\PhysicsEngine">
+      <UniqueIdentifier>{3441cb1d-cc8f-4665-bc11-e0f66b81501e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -119,6 +125,15 @@
     </ClCompile>
     <ClCompile Include="ECamera.cpp">
       <Filter>Source Files\Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="EPhysics.cpp">
+      <Filter>Source Files\Engine\Core\PhysicsEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="EPhysicsEngine.cpp">
+      <Filter>Source Files\Engine\Core\PhysicsEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +199,15 @@
     </ClInclude>
     <ClInclude Include="EMath.h">
       <Filter>Header Files\Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="EPhysicsEngine.h">
+      <Filter>Header Files\Engine\Core\Physics Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="EPhysics.h">
+      <Filter>Header Files\Engine\Core\Physics Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

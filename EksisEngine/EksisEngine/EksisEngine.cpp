@@ -52,6 +52,7 @@ bool EksisEngine::Run()
 			{
 				m_engineTimer.Tick();
 				m_camera->Update(m_engineTimer.GetDelta());
+				m_physicsEngine->Update(m_engineTimer.GetDelta());
 				EScreenManager::GetInstance()->GetCurrentScreen()->Update(m_engineTimer.GetDelta());
 				m_D3DHelper->BeginRender(0.0f, 0.0f, 0.0f);
 				m_camera->Render();
@@ -90,8 +91,10 @@ bool EksisEngine::Initialize()
 	m_textureManager = new ETextureManager();
 	m_textureManager->Initialize();
 	m_camera = new ECamera();
+	m_physicsEngine = new EPhysicsEngine();
 	ScreenInit screenInit;
 	screenInit.Initialize();
+
 
 	return true;
 }
@@ -129,6 +132,11 @@ ECamera * EksisEngine::GetCamera()
 	return m_camera;
 }
 
+EPhysicsEngine * EksisEngine::GetPhysicsEngine()
+{
+	return m_physicsEngine;
+}
+
 int GetClientHeight()
 {
 	return EksisEngine::GetInstance()->GetWindow()->GetClientHeight();
@@ -151,4 +159,9 @@ void UnloadTexture(const wchar_t * imageFile)
 ECamera * GetCamera()
 {
 	return EksisEngine::GetInstance()->GetCamera();
+}
+
+EPhysicsEngine * GetPhysicsEngine()
+{
+	return EksisEngine::GetInstance()->GetPhysicsEngine();
 }
