@@ -2,7 +2,6 @@
 
 #include "EMatrix.h"
 #include <Windows.h>
-#include <windowsx.h>
 
 class EWindow
 {
@@ -18,7 +17,6 @@ public:
 	int GetClientWidth();
 	int GetClientHeight();
 	HWND GetClientHandle();
-	HINSTANCE GetClientInstance();
 
 	EMatrix GetOrthoMatrix();
 

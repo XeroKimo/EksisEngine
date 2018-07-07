@@ -11,9 +11,11 @@ bool EShader::Initialize(HWND hWnd, const wchar_t * vsFile, const wchar_t * psFi
 	ID3D10Blob* errorMessage;
 	ID3D10Blob* vertexShaderBuffer;
 	ID3D10Blob* pixelShaderBuffer;
-	D3D11_INPUT_ELEMENT_DESC polygonLayout[2];
+	D3D11_INPUT_ELEMENT_DESC polygonLayout[3];
 	unsigned int numElements;
 	D3D11_BUFFER_DESC matrixBufferDesc;
+	D3D11_SAMPLER_DESC samplerDesc;  
+	D3D11_BLEND_DESC blendDesc;
 
 	errorMessage = nullptr;
 	vertexShaderBuffer = nullptr;
@@ -26,6 +28,7 @@ bool EShader::Initialize(HWND hWnd, const wchar_t * vsFile, const wchar_t * psFi
 		{
 			OutputShaderErrorMessage(errorMessage, hWnd, vsFile);
 		}
+
 		else
 		{
 			MessageBox(hWnd, vsFile, L"Missing Shader File", MB_OK);
@@ -78,6 +81,14 @@ bool EShader::Initialize(HWND hWnd, const wchar_t * vsFile, const wchar_t * psFi
 	polygonLayout[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 	polygonLayout[1].InstanceDataStepRate = 0;
 
+	polygonLayout[2].SemanticName = "TEXCOORD";
+	polygonLayout[2].SemanticIndex = 0;
+	polygonLayout[2].Format = DXGI_FORMAT_R32G32_FLOAT;
+	polygonLayout[2].InputSlot = 0;
+	polygonLayout[2].AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
+	polygonLayout[2].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+	polygonLayout[2].InstanceDataStepRate = 0;
+
 	numElements = sizeof(polygonLayout) / sizeof(polygonLayout[0]);
 
 	result = EksisEngine::GetInstance()->GetD3DHelper()->GetDevice()->CreateInputLayout(polygonLayout, numElements, vertexShaderBuffer->GetBufferPointer(), vertexShaderBuffer->GetBufferSize(), &m_layout);
@@ -105,6 +116,42 @@ bool EShader::Initialize(HWND hWnd, const wchar_t * vsFile, const wchar_t * psFi
 		return false;
 	}
 
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.MipLODBias = 0.0f;
+	samplerDesc.MaxAnisotropy = 1;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+	samplerDesc.BorderColor[0] = 0;
+	samplerDesc.BorderColor[1] = 0;
+	samplerDesc.BorderColor[2] = 0;
+	samplerDesc.BorderColor[3] = 0;
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	// Create the texture sampler state.
+	result = EksisEngine::GetInstance()->GetD3DHelper()->GetDevice()->CreateSamplerState(&samplerDesc, &m_sampleState);
+	if (FAILED(result))
+	{
+		return false;
+	}
+	blendDesc.AlphaToCoverageEnable = true;
+	blendDesc.IndependentBlendEnable = false;
+	blendDesc.RenderTarget[0].BlendEnable = true;
+	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ZERO;
+	blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	result = EksisEngine::GetInstance()->GetD3DHelper()->GetDevice()->CreateBlendState(&blendDesc, &m_blendState);
+	if (FAILED(result))
+	{
+		return false;
+	}
 	m_renderMatrix = new MatrixBufferType;
 	return true;
 }
@@ -139,7 +186,7 @@ void EShader::Shutdown()
 	}
 }
 
-void EShader::Render(int indexCount)
+void EShader::Render(int indexCount, ID3D11ShaderResourceView* texture)
 {
 	HRESULT result;
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
@@ -156,9 +203,12 @@ void EShader::Render(int indexCount)
 
 	bufferNumber = 0;
 	EksisEngine::GetInstance()->GetD3DHelper()->GetDeviceContext()->VSSetConstantBuffers(bufferNumber, 1, &m_matrixBuffer);
+	EksisEngine::GetInstance()->GetD3DHelper()->GetDeviceContext()->PSSetShaderResources(0, 1, &texture);
+
 	EksisEngine::GetInstance()->GetD3DHelper()->GetDeviceContext()->IASetInputLayout(m_layout);
 	EksisEngine::GetInstance()->GetD3DHelper()->GetDeviceContext()->VSSetShader(m_vertexShader, NULL, 0);
 	EksisEngine::GetInstance()->GetD3DHelper()->GetDeviceContext()->PSSetShader(m_pixelShader, NULL, 0);
+	EksisEngine::GetInstance()->GetD3DHelper()->GetDeviceContext()->OMSetBlendState(m_blendState, 0, 0xffffffff);
 
 	EksisEngine::GetInstance()->GetD3DHelper()->GetDeviceContext()->DrawIndexed(indexCount, 0, 0);
 
@@ -182,4 +232,34 @@ void EShader::SetOrtho(EMatrix o)
 
 void EShader::OutputShaderErrorMessage(ID3D10Blob * errorMessage, HWND hWnd, const wchar_t* shaderFileName)
 {
+	char* compileErrors;
+	unsigned long long bufferSize, i;
+	std::ofstream fout;
+
+
+	// Get a pointer to the error message text buffer.
+	compileErrors = (char*)(errorMessage->GetBufferPointer());
+
+	// Get the length of the message.
+	bufferSize = errorMessage->GetBufferSize();
+
+	// Open a file to write the error message to.
+	fout.open("shader-error.txt");
+	// Write out the error message.
+	for (i = 0; i<bufferSize; i++)
+	{
+		fout << compileErrors[i];
+	}
+
+	// Close the file.
+	fout.close();
+
+	// Release the error message.
+	errorMessage->Release();
+	errorMessage = 0;
+
+	// Pop a message up on the screen to notify the user to check the text file for compile errors.
+	MessageBox(hWnd, L"Error compiling shader.  Check shader-error.txt for message.", shaderFileName, MB_OK);
+
+	return;
 }

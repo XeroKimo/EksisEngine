@@ -2,13 +2,13 @@
 #include "EksisEngine.h"
 
 
-EMesh::EMesh()
+EMesh::EMesh():
+	m_vertices(nullptr)
 {
 }
 
 bool EMesh::Initialize(float width, float height)
 {
-	VertexType* vertices;
 	unsigned long* indices;
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
@@ -17,20 +17,24 @@ bool EMesh::Initialize(float width, float height)
 	m_vertexCount = 4;
 	m_indexCount = 6;
 
-	vertices = new VertexType[m_vertexCount];
+	m_vertices = new VertexType[m_vertexCount];
 	indices = new unsigned long[m_indexCount];
 
-	vertices[0].position = EVector(0.0f, 0.0f);
-	vertices[0].color = ColorVector(1.0f,0.0f,0.0f);
+	m_vertices[0].position = EVector(0.0f, 0.0f);
+	m_vertices[0].tex = TexVector(0.0f, 1.0f);
+	m_vertices[0].color = ColorVector(1.0f,1.0f,1.0f);
 
-	vertices[1].position = EVector(0.0f, height);
-	vertices[1].color = ColorVector(1.0f, 0.0f, 0.0f);
-
-	vertices[2].position = EVector(width, height);
-	vertices[2].color = ColorVector(1.0f, 0.0f, 0.0f);
-
-	vertices[3].position = EVector(width,0.0f);
-	vertices[3].color = ColorVector(1.0f, 0.0f, 0.0f);
+	m_vertices[1].position = EVector(0.0f, height);
+	m_vertices[1].tex = TexVector(0.0f, 0.0f);
+	m_vertices[1].color = ColorVector(1.0f, 1.0f, 1.0f);
+	
+	m_vertices[2].position = EVector(width, height);
+	m_vertices[2].tex = TexVector(1.0f, 0.0f);
+	m_vertices[2].color = ColorVector(1.0f, 1.0f, 1.0f);
+	
+	m_vertices[3].position = EVector(width,0.0f);
+	m_vertices[3].tex = TexVector(1.0f, 1.0f);
+	m_vertices[3].color = ColorVector(1.0f, 1.0f, 1.0f);
 
 	indices[0] = 0;
 	indices[1] = 1;
@@ -46,7 +50,7 @@ bool EMesh::Initialize(float width, float height)
 	vertexBufferDesc.MiscFlags = 0;
 	vertexBufferDesc.StructureByteStride = 0;
 
-	vertexData.pSysMem = vertices;
+	vertexData.pSysMem = m_vertices;
 	vertexData.SysMemPitch = 0;
 	vertexData.SysMemSlicePitch = 0;
 
@@ -73,13 +77,10 @@ bool EMesh::Initialize(float width, float height)
 		return false;
 	}
 
-	delete[] vertices;
-	vertices = nullptr;
-
 	delete[] indices;
 	indices = nullptr;
 
-	return false;
+	return true;
 }
 
 void EMesh::Destroy()
@@ -109,6 +110,32 @@ void EMesh::Render()
 	EksisEngine::GetInstance()->GetD3DHelper()->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
+void EMesh::SetColor(float red, float green,float blue, float alpha)
+{
+	D3D11_BUFFER_DESC vertexBufferDesc; 
+	D3D11_SUBRESOURCE_DATA vertexData;
+	ColorVector rgb(red, green, blue,alpha);
+	
+
+	m_vertices[0].color = rgb;
+	m_vertices[1].color = rgb;
+	m_vertices[2].color = rgb;
+	m_vertices[3].color = rgb;
+	
+	vertexBufferDesc.ByteWidth = sizeof(VertexType)*m_vertexCount;
+	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	vertexBufferDesc.CPUAccessFlags = 0;
+	vertexBufferDesc.MiscFlags = 0;
+	vertexBufferDesc.StructureByteStride = 0;
+
+	vertexData.pSysMem = m_vertices;
+	vertexData.SysMemPitch = 0;
+	vertexData.SysMemSlicePitch = 0;
+
+	EksisEngine::GetInstance()->GetD3DHelper()->GetDevice()->CreateBuffer(&vertexBufferDesc, &vertexData, &m_vertexBuffer);
+}
+
 int EMesh::GetIndexCount()
 {
 	return m_indexCount;
@@ -126,4 +153,15 @@ ColorVector::ColorVector(float red, float green, float blue, float alpha)
 	g = green;
 	b = blue;
 	a = alpha;
+}
+
+TexVector::TexVector()
+{
+	u = v = 0.0f;
+}
+
+TexVector::TexVector(float r, float g)
+{
+	u = r;
+	v = g;
 }

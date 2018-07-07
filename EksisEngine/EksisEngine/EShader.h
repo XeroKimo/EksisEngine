@@ -17,8 +17,9 @@ public:
 	EShader();
 	bool Initialize(HWND hWnd, const wchar_t* vsFile, const wchar_t* psFile);
 	void Shutdown();
-	void Render(int indexCount);
+	void Render(int indexCount, ID3D11ShaderResourceView* texture);
 
+	
 	void SetModel(EMatrix m);
 	void SetView(EMatrix v);
 	void SetOrtho(EMatrix o);
@@ -33,4 +34,6 @@ private:
 	ID3D11InputLayout* m_layout;
 	ID3D11Buffer* m_matrixBuffer;
 	D3D11_MAPPED_SUBRESOURCE m_mappedResource;
+	ID3D11SamplerState* m_sampleState;
+	ID3D11BlendState* m_blendState;
 };

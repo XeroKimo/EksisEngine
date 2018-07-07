@@ -37,7 +37,6 @@ EMatrix EMatrix::operator*(EMatrix m)
 
 
 
-	return EMatrix();
 }
 
 void EMatrix::Transpose()
@@ -96,11 +95,11 @@ void EMatrix::SetRotation(float radians)
 	m_matrix[1][0] = sin(radians); m_matrix[1][1] = cos(radians);
 }
 
-void EMatrix::SetScale(EVector scale)
+void EMatrix::SetScale(float scale)
 {
-	m_matrix[0][0] *= scale.x;
-	m_matrix[1][1] *= scale.y;
-	m_matrix[2][2] *= scale.z;
+	m_matrix[0][0] *= scale;
+	m_matrix[1][1] *= scale;
+	m_matrix[2][2] *= scale;
 }
 
 
