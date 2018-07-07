@@ -9,7 +9,6 @@ public:
 	ERenderable(float width, float height);
 	~ERenderable();
 
-
 	void SetPosition(float x, float y);
 	void SetPosition(EVector position);
 	EVector GetPosition();
@@ -26,10 +25,6 @@ public:
 	float GetScale();
 
 	EVector GetDimension();
-
-
-	virtual void Render() = 0;
-
 
 	virtual void Render() = 0;
 

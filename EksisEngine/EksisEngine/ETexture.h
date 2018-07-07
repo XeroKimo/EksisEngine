@@ -34,7 +34,8 @@ public:
 	void Shutdown();
 	ID3D11ShaderResourceView* GetTexture();
 
-	int GetDXGIFormatBitsPerPixel(DXGI_FORMAT& dxgiFormat);
+	int GetDXGIFormatBitsPerPixel(DXGI_FORMAT& dxgiFormat); 
+	WICPixelFormatGUID GetConvertToWICFormat(WICPixelFormatGUID& wicFormatGUID);
 
 	UINT GetHeight();
 	UINT GetWidth();

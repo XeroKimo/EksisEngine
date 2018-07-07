@@ -33,8 +33,8 @@ private:
 	struct VertexType
 	{
 		EVector position;
+		ColorVector color;
 		TexVector tex;
-		//ColorVector color;
 	};
 	VertexType* m_vertices;
 	ID3D11Buffer *m_vertexBuffer, *m_indexBuffer;

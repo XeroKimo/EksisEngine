@@ -14,6 +14,20 @@ EVector::EVector(float zx, float zy)
 	z = 0.0f;
 }
 
+EVector EVector::operator+(const EVector & other)
+{
+	x += other.x;
+	y += other.y;
+	return EVector(x,y);
+}
+
+EVector EVector::operator-(const EVector & other)
+{
+	x -= other.x;
+	y -= other.y;
+	return EVector(x, y);
+}
+
 EVector::~EVector()
 {
 }

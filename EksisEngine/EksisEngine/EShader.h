@@ -35,4 +35,5 @@ private:
 	ID3D11Buffer* m_matrixBuffer;
 	D3D11_MAPPED_SUBRESOURCE m_mappedResource;
 	ID3D11SamplerState* m_sampleState;
+	ID3D11BlendState* m_blendState;
 };
