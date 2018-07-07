@@ -7,8 +7,6 @@
 
 #include "EKeyCodes.h"
 #include "ETextureManager.h"
-#include "EEngineTimer.h"
-#include "ECamera.h"
 
 class EksisEngine
 {
@@ -21,7 +19,6 @@ public:
 	EShader* GetShader();
 	EWindow* GetWindow();
 	ETextureManager* GetTextureManager();
-	ECamera* GetCamera();
 
 private:
 	EksisEngine();
@@ -40,12 +37,9 @@ private:
 	float m_y = 0;
 };
 	ETextureManager* m_textureManager;
-	EEngineTimer m_engineTimer;
-	ECamera* m_camera;
 };
 
-int GetClientHeight();
-int GetClientWidth();
-void LoadTexture(const wchar_t* imageFile);
-void UnloadTexture(const wchar_t* imageFile);
-ECamera* GetCamera();
+float GetClientHeight();
+float GetClientWidth();
+void Load(const wchar_t* imageFile);
+void Unload(const wchar_t* imageFile);

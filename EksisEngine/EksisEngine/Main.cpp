@@ -1,7 +1,7 @@
 
 #include <Windows.h>
+#include <strsafe.h>
 #include "EksisEngine.h"
-
 
 #if defined(_DEBUG) || defined(DEBUG)
 int main()
@@ -11,6 +11,5 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 {
 	EksisEngine::GetInstance()->Run();
 	EksisEngine::GetInstance()->Shutdown();
-	system("Pause");
-	return 0;
+	system("PAUSE");
 }

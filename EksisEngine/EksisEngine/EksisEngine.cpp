@@ -1,8 +1,7 @@
 #include "EksisEngine.h"
+#include "EWindow.h"
 #include "ESquare.h"
 #include "ESprite.h"
-#include "EScreenManager.h"
-#include "ScreenInit.h"
 
 EksisEngine* EksisEngine::instance = nullptr;
 
@@ -11,6 +10,7 @@ EksisEngine * EksisEngine::GetInstance()
 	if (instance == nullptr)
 	{
 		instance = new EksisEngine;
+		return instance;
 	}
 	return instance;
 }
@@ -34,7 +34,17 @@ bool EksisEngine::Run()
 	}
 	else
 	{
-		
+		Load(L"Bank.png");
+		Load(L"asteroid.png");
+		ESquare test;
+		ESquare test3;
+		ESprite test2;
+		ESprite test4(L"asteroid.png");
+		test3.SetColor(1.0f, 0.0f, 0.0f);
+		test2.SetTexture(L"Bank.png");
+		float x, y;
+		x = y = 0.0f;
+		float radians = 0.0f;
 		MSG msg;
 		bool done = false;
 
@@ -70,20 +80,33 @@ bool EksisEngine::Run()
 			}
 			else
 			{
-				m_engineTimer.Tick();
-				m_camera->Update(m_engineTimer.GetDelta());
-				EScreenManager::GetInstance()->GetCurrentScreen()->Update(m_engineTimer.GetDelta());
+				radians += 0.01f;
+				test.SetOrigin(0.5f, 0.5f);
+				test.SetPosition(640,360);
+				test.SetRotation(radians);
+				test.SetScale(3.0f, 0.5f);
+				test4.SetPosition(640, 360);
+				test4.SetOrigin(0.5f, 0.5f);
+				test4.SetRotation(radians);
 				m_D3DHelper->BeginRender(0.0f, 0.0f, 0.0f);
-				m_camera->Render();
-				EScreenManager::GetInstance()->GetCurrentScreen()->Render();
 
 				EVector mousePosition = EVector(m_input->GetMouse()->GetCursor()->x, m_input->GetMouse()->GetCursor()->y);
 				EVector squarePosition = EVector(m_x, m_y);
+
+				test.SetPosition(mousePosition);
+				test.SetOrigin(0, 1);
+
+				test.Render();
+		/*		test.Render();
+				test3.Render();*/
+				test4.Render();
+				test2.Render();
 				m_D3DHelper->EndRender();
-				EScreenManager::GetInstance()->GetCurrentScreen()->Input();
+				Sleep(16);
 			}
 
 		}
+		EksisEngine::GetInstance()->Shutdown();
 		return (int)msg.wParam;
 	}
 }
@@ -105,7 +128,7 @@ bool EksisEngine::Initialize()
 	}
 
 	m_shader = new EShader();
-	if (!m_shader->Initialize(m_window->GetClientHandle(), L"texture.vs", L"texture.ps"))
+	if (!m_shader->Initialize(m_window->GetClientHandle(), L"color.vs", L"color.ps"))
 	{
 		MessageBox(m_window->GetClientHandle(), L"Shader Init", L"failed to initialize", MB_OK);
 		return false;
@@ -115,11 +138,6 @@ bool EksisEngine::Initialize()
 
 
 	m_textureManager = new ETextureManager();
-	m_textureManager->Initialize();
-	m_camera = new ECamera();
-	ScreenInit screenInit;
-	screenInit.Initialize();
-
 	return true;
 }
 
@@ -152,31 +170,21 @@ ETextureManager * EksisEngine::GetTextureManager()
 	return m_textureManager;
 }
 
-ECamera * EksisEngine::GetCamera()
-{
-	return m_camera;
-}
-
-int GetClientHeight()
+float GetClientHeight()
 {
 	return EksisEngine::GetInstance()->GetWindow()->GetClientHeight();
 }
 
-int GetClientWidth()
+float GetClientWidth()
 {
 	return EksisEngine::GetInstance()->GetWindow()->GetClientWidth();
 }
 
-void LoadTexture(const wchar_t * imageFile)
+void Load(const wchar_t * imageFile)
 {
 	EksisEngine::GetInstance()->GetTextureManager()->Load(imageFile);
 }
-void UnloadTexture(const wchar_t * imageFile)
+void Unload(const wchar_t * imageFile)
 {
 	EksisEngine::GetInstance()->GetTextureManager()->Unload(imageFile);
-}
-
-ECamera * GetCamera()
-{
-	return EksisEngine::GetInstance()->GetCamera();
 }

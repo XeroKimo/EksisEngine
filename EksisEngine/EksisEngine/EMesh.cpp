@@ -22,19 +22,19 @@ bool EMesh::Initialize(float width, float height)
 
 	m_vertices[0].position = EVector(0.0f, 0.0f);
 	m_vertices[0].tex = TexVector(0.0f, 1.0f);
-	m_vertices[0].color = ColorVector(1.0f,1.0f,1.0f);
+	//m_vertices[0].color = ColorVector(1.0f,1.0f,1.0f);
 
 	m_vertices[1].position = EVector(0.0f, height);
 	m_vertices[1].tex = TexVector(0.0f, 0.0f);
-	m_vertices[1].color = ColorVector(1.0f, 1.0f, 1.0f);
+	//m_vertices[1].color = ColorVector(1.0f, 1.0f, 1.0f);
 	
 	m_vertices[2].position = EVector(width, height);
 	m_vertices[2].tex = TexVector(1.0f, 0.0f);
-	m_vertices[2].color = ColorVector(1.0f, 1.0f, 1.0f);
+	//m_vertices[2].color = ColorVector(1.0f, 1.0f, 1.0f);
 	
 	m_vertices[3].position = EVector(width,0.0f);
 	m_vertices[3].tex = TexVector(1.0f, 1.0f);
-	m_vertices[3].color = ColorVector(1.0f, 1.0f, 1.0f);
+	//m_vertices[3].color = ColorVector(1.0f, 1.0f, 1.0f);
 
 	indices[0] = 0;
 	indices[1] = 1;
@@ -80,7 +80,7 @@ bool EMesh::Initialize(float width, float height)
 	delete[] indices;
 	indices = nullptr;
 
-	return true;
+	return false;
 }
 
 void EMesh::Destroy()
@@ -114,13 +114,13 @@ void EMesh::SetColor(float red, float green,float blue, float alpha)
 {
 	D3D11_BUFFER_DESC vertexBufferDesc; 
 	D3D11_SUBRESOURCE_DATA vertexData;
-	ColorVector rgb(red, green, blue,alpha);
-	
+	//ColorVector rgb(red, green, blue,alpha);
+	//
 
-	m_vertices[0].color = rgb;
-	m_vertices[1].color = rgb;
-	m_vertices[2].color = rgb;
-	m_vertices[3].color = rgb;
+	//m_vertices[0].color = rgb;
+	//m_vertices[1].color = rgb;
+	//m_vertices[2].color = rgb;
+	//m_vertices[3].color = rgb;
 	
 	vertexBufferDesc.ByteWidth = sizeof(VertexType)*m_vertexCount;
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;

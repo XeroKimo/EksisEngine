@@ -15,17 +15,7 @@ ESprite::ESprite(const wchar_t * imageFile)
 	m_mesh = new EMesh();
 	m_mesh->Initialize((float)m_texture->GetWidth(), (float)m_texture->GetHeight());
 
-	__super::SetDimensions((float)m_texture->GetWidth(), (float)m_texture->GetHeight());
-}
-
-ESprite::~ESprite()
-{
-	if (m_mesh)
-	{
-		delete m_mesh;
-		m_mesh = nullptr;
-	}
-	m_texture = nullptr;
+	__super::Initialize((float)m_texture->GetWidth(), (float)m_texture->GetHeight());
 }
 
 bool ESprite::SetTexture(const wchar_t * imageFile)
@@ -40,7 +30,7 @@ bool ESprite::SetTexture(const wchar_t * imageFile)
 	m_mesh = new EMesh();
 	m_mesh->Initialize((float)m_texture->GetWidth(), (float)m_texture->GetHeight());
 	
-	__super::SetDimensions((float)m_texture->GetWidth(), (float)m_texture->GetHeight());
+	__super::Initialize((float)m_texture->GetWidth(), (float)m_texture->GetHeight());
 	
 	return true;
 }
@@ -53,7 +43,7 @@ void ESprite::Render()
 {
 	m_mesh->Render();
 	EksisEngine::GetInstance()->GetShader()->SetModel(GetMatrix());
-	EksisEngine::GetInstance()->GetShader()->SetView(GetCamera()->GetMatrix());
+	EksisEngine::GetInstance()->GetShader()->SetView(EMatrix::Identity());
 	EksisEngine::GetInstance()->GetShader()->SetOrtho(EksisEngine::GetInstance()->GetWindow()->GetOrthoMatrix());
 	EksisEngine::GetInstance()->GetShader()->Render(m_mesh->GetIndexCount(),m_texture->GetTexture());
 }

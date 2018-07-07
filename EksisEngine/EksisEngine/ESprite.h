@@ -8,7 +8,6 @@ class ESprite : public ERenderable
 public:
 	ESprite();
 	ESprite(const wchar_t* imageFile);
-	~ESprite();
 
 	bool SetTexture(const wchar_t* imageFile);
 	void Shutdown();

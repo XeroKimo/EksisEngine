@@ -97,6 +97,6 @@ EMatrix ERenderable::GetMatrix()
 	EMatrix position;
 	position.SetPosition(EVector(m_position.x, m_position.y));
 	EMatrix scale;
-	scale.SetScale(m_scale);
+	scale.SetScale(EVector(m_scale, m_scale));
 	return position *  rotation * anchor * scale;
 }

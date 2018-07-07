@@ -13,7 +13,6 @@ public:
 	void Load(const wchar_t* imageFile);
 	void Unload(const wchar_t* imageFile);
 	ETexture* GetTexture(const wchar_t* imageFile);
-	ID3D11ShaderResourceView* BlankTexture();
 private:
 	std::map<const wchar_t, ETexture> m_textureMap;
 };

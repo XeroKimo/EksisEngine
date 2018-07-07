@@ -4,8 +4,6 @@ class EVector
 public:
 	EVector();
 	EVector(float zx, float zy);
-	EVector operator+(const EVector &other);
-	EVector operator-(const EVector &other);
 	~EVector();
 
 	float x;

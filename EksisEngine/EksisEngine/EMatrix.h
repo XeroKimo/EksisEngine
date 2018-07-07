@@ -16,7 +16,7 @@ public:
 
 	void SetPosition(EVector position);
 	void SetRotation(float radians);
-	void SetScale(float scale);
+	void SetScale(EVector scale);
 
 	float m_matrix[4][4];
 };
