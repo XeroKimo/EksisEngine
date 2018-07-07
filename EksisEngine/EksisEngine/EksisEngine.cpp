@@ -72,8 +72,10 @@ bool EksisEngine::Run()
 				m_D3DHelper->BeginRender(0.0f, 0.0f, 0.0f);
 
 				EVector mousePosition = EVector(m_input->GetMouse()->GetCursor()->x, m_input->GetMouse()->GetCursor()->y);
-				
-				test.SetPosition(EVector(m_x, m_y));
+				EVector squarePosition = EVector(m_x, m_y);
+
+				test.SetPosition(mousePosition);
+				test.SetOrigin(0, 1);
 
 				test.Render();
 				m_D3DHelper->EndRender();
