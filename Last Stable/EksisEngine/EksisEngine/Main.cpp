@@ -3,8 +3,14 @@
 #include <strsafe.h>
 #include "EksisEngine.h"
 
-
-int CALLBACK WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,  LPSTR lpCmdLine,  int nCmdShow)
+#if defined(_DEBUG) || defined(DEBUG)
+int main()
+#else
+int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+#endif
 {
 	EksisEngine::GetInstance()->Run();
+	EksisEngine::GetInstance()->Shutdown();
+	system("Pause");
+	return 0;
 }

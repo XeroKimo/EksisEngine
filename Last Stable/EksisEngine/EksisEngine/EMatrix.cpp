@@ -28,7 +28,7 @@ EMatrix EMatrix::operator*(EMatrix m)
 	
 	for (int i = 0; i < 4; i++)
 	{
-		for (int j = 0; j < 0; j++)
+		for (int j = 0; j < 4; j++)
 		{
 			mat.m_matrix[i][j] = m_matrix[i][0] * m.m_matrix[0][j] + m_matrix[i][1] * m.m_matrix[1][j] + m_matrix[i][2] * m.m_matrix[2][j] + m_matrix[i][3] * m.m_matrix[3][j];
 		}
@@ -37,7 +37,6 @@ EMatrix EMatrix::operator*(EMatrix m)
 
 
 
-	return EMatrix();
 }
 
 void EMatrix::Transpose()

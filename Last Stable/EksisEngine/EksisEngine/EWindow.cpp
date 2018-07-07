@@ -52,7 +52,7 @@ int EWindow::Initialize(const wchar_t *name, int width, int height)
 	// NULL: not used in this application  
 	int ScreenWidth = GetSystemMetrics(SM_CXSCREEN);
 	int ScreenHeight = GetSystemMetrics(SM_CYSCREEN);
-	m_hWnd = CreateWindowEx(WS_EX_APPWINDOW, name, name, WS_OVERLAPPEDWINDOW, (ScreenWidth - width) / 2, (ScreenHeight - height) / 2, width, height, NULL, NULL, m_hInstance, NULL);
+	m_hWnd = CreateWindowEx(WS_EX_APPWINDOW, name, name, WS_OVERLAPPEDWINDOW, (ScreenWidth - width) /2,(ScreenHeight - height) /2, width, height, NULL, NULL, m_hInstance, NULL);
 	if (!m_hWnd)
 	{
 		MessageBox(NULL, L"Error Making window", L"Win32 Guided Tour", NULL);

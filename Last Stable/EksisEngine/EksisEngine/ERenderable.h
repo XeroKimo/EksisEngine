@@ -9,6 +9,8 @@ public:
 	ERenderable(float width, float height);
 	~ERenderable();
 
+	void Initialize(float width, float height);
+
 	void SetPosition(float x, float y);
 	void SetPosition(EVector position);
 
@@ -19,6 +21,9 @@ public:
 
 	void SetScale(float x, float y);
 	void SetScale(EVector scale);
+
+
+	virtual void Render() = 0;
 
 	EMatrix GetMatrix();
 
