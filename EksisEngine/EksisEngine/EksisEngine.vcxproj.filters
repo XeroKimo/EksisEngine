@@ -64,6 +64,12 @@
     <Filter Include="Source Files\Engine\Core\PhysicsEngine">
       <UniqueIdentifier>{3441cb1d-cc8f-4665-bc11-e0f66b81501e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\Input">
+      <UniqueIdentifier>{bfa59ee4-9474-4e0f-b348-84526aeb1155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Input">
+      <UniqueIdentifier>{5c55ae38-5ad9-4c91-acc4-6b2914202b5d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -132,8 +138,26 @@
     <ClCompile Include="EPhysicsEngine.cpp">
       <Filter>Source Files\Engine\Core\PhysicsEngine</Filter>
     </ClCompile>
+    <ClCompile Include="EMath.cpp">
+      <Filter>Source Files\Engine\Math</Filter>
+    </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="EController.cpp">
+      <Filter>Source Files\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="EInput.cpp">
+      <Filter>Source Files\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="EKeyboard.cpp">
+      <Filter>Source Files\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="EMouse.cpp">
+      <Filter>Source Files\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>Source Files\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -197,9 +221,6 @@
     <ClInclude Include="ECamera.h">
       <Filter>Header Files\Engine\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="EMath.h">
-      <Filter>Header Files\Engine\Math</Filter>
-    </ClInclude>
     <ClInclude Include="EPhysicsEngine.h">
       <Filter>Header Files\Engine\Core\Physics Engine</Filter>
     </ClInclude>
@@ -208,6 +229,30 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="EMathLib.h">
+      <Filter>Header Files\Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="EMath.h">
+      <Filter>Header Files\Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="EController.h">
+      <Filter>Header Files\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="EInput.h">
+      <Filter>Header Files\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="EKeyboard.h">
+      <Filter>Header Files\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="EKeyCodes.h">
+      <Filter>Header Files\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="EMouse.h">
+      <Filter>Header Files\Engine\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

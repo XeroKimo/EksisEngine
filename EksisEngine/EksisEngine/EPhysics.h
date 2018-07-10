@@ -1,5 +1,5 @@
 #pragma once
-#include "EMath.h"
+#include "EMathLib.h"
 
 enum PhysicsFlags {
 	GRAVITY = 0b00000001,
@@ -7,15 +7,25 @@ enum PhysicsFlags {
 	MOVEABLE = 0b00000100
 };
 
+enum ObjectTags {
+	TAG_PLAYER = 1,
+	TAG_PLATFORM = 2
+};
+
 class EPhysics
 {
 public:
 	EPhysics();
 
-	void SetFlag(PhysicsFlags flags);
-	void ToggleFlag(PhysicsFlags flags);
+	void SetFlag(int flags);
+	void ToggleFlag(int flags);
 	char GetFlag();
 
+	void SetTag(int tags);
+	int GetTag();
+
+	void SetIgnoreTag(int tags);
+	int GetIgnoreTag();
 
 	void SetVelocity(EVector velocity);
 	void SetVelocity(float x, float y);
@@ -24,19 +34,27 @@ public:
 	void ApplyForce(EVector acceleration);
 	void ApplyForce(float x, float y);
 
-	void SetAcceleration(EVector acceleration);
-	void SetAcceleration(float x, float y);
-	EVector GetAcceleration();
+	void SetHitbox(EVector hitbox);
+	void SetHitbox(float width, float height);
+	EVector GetHitbox();
+
+	void SetHitboxPosition(EVector hitboxPosition);
+	void SetHitboxPosition(float width, float height);
+	EVector GetHitboxPosition();
 
 	void SetMass(float mass);
 	float GetMass();
 
 private:
 	char p_flags;
+	int p_objectTags;
+	int p_ignoreTags;
+	EVector p_hitbox;
+	EVector p_hitboxPosition;
 
 protected:
 	EVector p_velocity;
-	EVector p_acceleration;
 	float p_mass;
+
 	
 };

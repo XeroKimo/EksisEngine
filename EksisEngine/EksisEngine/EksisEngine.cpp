@@ -50,6 +50,7 @@ bool EksisEngine::Run()
 			}
 			else
 			{
+				m_input->PollInput();
 				m_engineTimer.Tick();
 				m_camera->Update(m_engineTimer.GetDelta());
 				m_physicsEngine->Update(m_engineTimer.GetDelta());
@@ -58,7 +59,7 @@ bool EksisEngine::Run()
 				m_camera->Render();
 				EScreenManager::GetInstance()->GetCurrentScreen()->Render();
 				m_D3DHelper->EndRender();
-				EScreenManager::GetInstance()->GetCurrentScreen()->Input();
+				EScreenManager::GetInstance()->GetCurrentScreen()->Input(m_input);
 			}
 
 		}
@@ -91,6 +92,7 @@ bool EksisEngine::Initialize()
 	m_textureManager = new ETextureManager();
 	m_textureManager->Initialize();
 	m_camera = new ECamera();
+	m_input = new EInput();
 	m_physicsEngine = new EPhysicsEngine();
 	ScreenInit screenInit;
 	screenInit.Initialize();
@@ -101,6 +103,8 @@ bool EksisEngine::Initialize()
 
 void EksisEngine::Shutdown()
 {
+	m_input->Shutdown();
+	m_physicsEngine->Shutdown();
 	m_textureManager->Shutdown();
 	m_shader->Shutdown();
 	m_D3DHelper->Shutdown();

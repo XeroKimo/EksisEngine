@@ -4,18 +4,17 @@
 EPhysics::EPhysics() : 
 	p_flags(0),
 	p_velocity(EVector(0,0)),
-	p_acceleration(EVector(0,0)),
 	p_mass(1.0f)
 {
 }
 
-void EPhysics::SetFlag(PhysicsFlags flags)
+void EPhysics::SetFlag(int flags)
 {
 	p_flags = flags;
 	GetPhysicsEngine()->SetPhysics(this);
 }
 
-void EPhysics::ToggleFlag(PhysicsFlags flags)
+void EPhysics::ToggleFlag(int flags)
 {
 	GetPhysicsEngine()->UnsetPhysics(this);
 	p_flags = p_flags ^ flags;
@@ -24,6 +23,26 @@ void EPhysics::ToggleFlag(PhysicsFlags flags)
 char EPhysics::GetFlag()
 {
 	return p_flags;
+}
+
+void EPhysics::SetTag(int tags)
+{
+	p_objectTags = tags;
+}
+
+int EPhysics::GetTag()
+{
+	return p_objectTags;
+}
+
+void EPhysics::SetIgnoreTag(int tags)
+{
+	p_ignoreTags = tags;
+}
+
+int EPhysics::GetIgnoreTag()
+{
+	return p_ignoreTags;
 }
 
 void EPhysics::SetVelocity(EVector velocity)
@@ -38,33 +57,49 @@ void EPhysics::SetVelocity(float x, float y)
 
 EVector EPhysics::GetVelocity()
 {
-	return EVector();
+	return p_velocity;
 }
 
 void EPhysics::ApplyForce(EVector acceleration)
 {
-	p_acceleration += EVector(acceleration.x, acceleration.y);
+	p_velocity += EVector(acceleration);
 }
 
 void EPhysics::ApplyForce(float x, float y)
 {
-	p_acceleration += EVector(x, y);
+	p_velocity += EVector(x, y);
+}			  
+			  
+void EPhysics::SetHitbox(EVector hitbox)
+{
+	p_hitbox = hitbox;
 }
 
-void EPhysics::SetAcceleration(EVector acceleration)
+void EPhysics::SetHitbox(float width, float height)
 {
-	p_acceleration = acceleration;
+	p_hitbox = EVector(width, height);
 }
 
-void EPhysics::SetAcceleration(float x, float y)
+EVector EPhysics::GetHitbox()
 {
-	p_acceleration = EVector(x, y);
+	return p_hitbox;
 }
 
-EVector EPhysics::GetAcceleration()
+void EPhysics::SetHitboxPosition(EVector hitboxPosition)
 {
-	return p_acceleration;
+	p_hitboxPosition = hitboxPosition;
 }
+
+void EPhysics::SetHitboxPosition(float width, float height)
+{
+	p_hitboxPosition = EVector(width, height);
+}
+
+EVector EPhysics::GetHitboxPosition()
+{
+	return p_hitboxPosition;
+}
+
 
 void EPhysics::SetMass(float mass)
 {

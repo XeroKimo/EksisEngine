@@ -34,6 +34,24 @@ EVector EVector::operator+=(const EVector other)
 	return EVector(x, y);
 }
 
+EVector EVector::operator*(const EVector other)
+{
+	x *= other.x;
+	y *= other.y;
+	return EVector(x, y);
+}
+EVector EVector::operator/(const EVector other)
+{
+	x /= other.x;
+	y /= other.y;
+	return EVector(x, y);
+}
+EVector EVector::operator/(const float other)
+{
+	x /= other;
+	y /= other;
+	return EVector(x, y);
+}
 EVector::~EVector()
 {
 }

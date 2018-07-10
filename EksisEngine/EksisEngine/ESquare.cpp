@@ -50,19 +50,13 @@ void ESquare::SetColor(float r, float g, float b, float a)
 
 void ESquare::SetDimensions(float width, float height)
 {
-	delete m_mesh;
-	m_mesh = new EMesh();
-	m_mesh->Initialize(width, height);
-	m_mesh->SetColor(m_red, m_green, m_blue, m_alpha);
+	m_mesh->SetDimensions(width, height);
 	__super::SetDimensions(width, height);
 }
 
 void ESquare::SetDimensions(EVector dimensions)
 {
-	delete m_mesh;
-	m_mesh = new EMesh();
-	m_mesh->Initialize(dimensions.x,dimensions.y);
-	m_mesh->SetColor(m_red, m_green, m_blue, m_alpha);
+	m_mesh->SetDimensions(dimensions.x,dimensions.y);
 	__super::SetDimensions(dimensions);
 }
 

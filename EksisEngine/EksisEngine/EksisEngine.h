@@ -6,6 +6,7 @@
 #include "EEngineTimer.h"
 #include "ECamera.h"
 #include "EPhysicsEngine.h"
+#include "EInput.h"
 
 class EksisEngine
 {
@@ -34,6 +35,7 @@ private:
 	EEngineTimer m_engineTimer;
 	ECamera* m_camera;
 	EPhysicsEngine* m_physicsEngine;
+	EInput* m_input;
 };
 
 int GetClientHeight();

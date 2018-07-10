@@ -18,14 +18,14 @@ public:
 private:
 	std::vector<EPhysics*> m_gravityVector;
 	std::vector<EPhysics*> m_collidableVector;
-	std::vector<EPhysics*> m_moveableVector;
 private:
 	void ApplyGravity(double delta);
 	void DetectCollision(double delta);
-	void MoveObjects(double delta);
+	void MoveObjects(double delta, EPhysics* object1, EPhysics* object2);
+
+	bool IgnoreCollision(EPhysics* object1, EPhysics* object2);
 	
 	void RemoveGravity(EPhysics* object);
 	void RemoveCollidable(EPhysics* object);
-	void RemoveMoveable(EPhysics* object);
 };
 
