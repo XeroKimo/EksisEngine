@@ -27,7 +27,6 @@ public:
 	bool Initialize(float width, float height);
 	void Destroy();
 	void Render();
-	void SetDimensions(float width, float height);
 	void SetColor(float red, float green, float blue, float alpha = 1.0f);
 	int GetIndexCount();
 private:

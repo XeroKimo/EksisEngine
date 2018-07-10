@@ -50,16 +50,14 @@ bool EksisEngine::Run()
 			}
 			else
 			{
-				m_input->PollInput();
 				m_engineTimer.Tick();
 				m_camera->Update(m_engineTimer.GetDelta());
-				m_physicsEngine->Update(m_engineTimer.GetDelta());
 				EScreenManager::GetInstance()->GetCurrentScreen()->Update(m_engineTimer.GetDelta());
 				m_D3DHelper->BeginRender(0.0f, 0.0f, 0.0f);
 				m_camera->Render();
 				EScreenManager::GetInstance()->GetCurrentScreen()->Render();
 				m_D3DHelper->EndRender();
-				EScreenManager::GetInstance()->GetCurrentScreen()->Input(m_input);
+				EScreenManager::GetInstance()->GetCurrentScreen()->Input();
 			}
 
 		}
@@ -92,19 +90,14 @@ bool EksisEngine::Initialize()
 	m_textureManager = new ETextureManager();
 	m_textureManager->Initialize();
 	m_camera = new ECamera();
-	m_input = new EInput();
-	m_physicsEngine = new EPhysicsEngine();
 	ScreenInit screenInit;
 	screenInit.Initialize();
-
 
 	return true;
 }
 
 void EksisEngine::Shutdown()
 {
-	m_input->Shutdown();
-	m_physicsEngine->Shutdown();
 	m_textureManager->Shutdown();
 	m_shader->Shutdown();
 	m_D3DHelper->Shutdown();
@@ -136,11 +129,6 @@ ECamera * EksisEngine::GetCamera()
 	return m_camera;
 }
 
-EPhysicsEngine * EksisEngine::GetPhysicsEngine()
-{
-	return m_physicsEngine;
-}
-
 int GetClientHeight()
 {
 	return EksisEngine::GetInstance()->GetWindow()->GetClientHeight();
@@ -163,9 +151,4 @@ void UnloadTexture(const wchar_t * imageFile)
 ECamera * GetCamera()
 {
 	return EksisEngine::GetInstance()->GetCamera();
-}
-
-EPhysicsEngine * GetPhysicsEngine()
-{
-	return EksisEngine::GetInstance()->GetPhysicsEngine();
 }

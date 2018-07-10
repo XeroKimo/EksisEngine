@@ -10,11 +10,7 @@ public:
 	ECamera();
 
 	void AttachCameraToObject(ERenderable* object);
-	void DetachCameraFromObject();
 	void AttachElementToCamera(ERenderable* object);
-	void DetachElementFromCamera(ERenderable* object);
-	void ClearElementsFromCamera();
-
 	void SetCameraOffset(EVector offset);
 	void SetCameraOFfset(float x, float y);
 

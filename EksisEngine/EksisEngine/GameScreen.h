@@ -1,6 +1,6 @@
 #pragma once
 #include "Screen.h"
-#include "Player.h"
+
 class GameScreen : public Screen
 {
 public:
@@ -16,7 +16,6 @@ public:
 	ScreenID GetID();
 
 private:
-	Player m_player1;
 	float radians;
 	EVector position;
 	ESquare player;

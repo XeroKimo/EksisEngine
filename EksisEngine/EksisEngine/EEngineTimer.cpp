@@ -7,8 +7,8 @@ EEngineTimer::EEngineTimer() :
 	m_elapsedTime(0.0),
 	m_currentTime(0.0),
 	m_previousTime(0.0),
-	m_limitFrames(true),
-	m_targetFrameTime(60/1000)
+	m_limitFrames(false),
+	m_targetFrameTime(0.0016)
 
 {
 }
