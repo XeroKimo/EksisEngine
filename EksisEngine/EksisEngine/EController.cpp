@@ -8,11 +8,11 @@ std::map<EKeyCode, int> EController::PollInput()
 	{
 		if (GetAsyncKeyState((int)pair.first))
 		{
-			m_keyMap[pair.first] = KEY_INACTIVE;
+			m_keyMap[pair.first] = KEY_DOWN;
 		}
 		else
 		{
-			m_keyMap[pair.first] = KEY_DOWN;
+			m_keyMap[pair.first] = KEY_INACTIVE;
 		}
 	}
 
@@ -26,7 +26,7 @@ std::map<EKeyCode, int> EController::GetMap()
 
 bool EController::IsKeyValid(EKeyCode key)
 {
-	return (m_keyMap[key] != NULL) ? true : false;
+	return (m_keyMap.find(key) != m_keyMap.end()) ? true : false;
 }
 
 int EController::GetPressed(EKeyCode key)
@@ -47,7 +47,7 @@ int EController::GetState(EKeyCode key)
 	}
 	else if (m_keyMap[key] == KEY_DOWN && m_previousKeyMap[key] == KEY_DOWN)
 	{
-		return KEY_DOWN;
+		return KEY_HELD;
 	}
 	else if (m_keyMap[key] == KEY_INACTIVE && m_previousKeyMap[key] == KEY_DOWN)
 	{

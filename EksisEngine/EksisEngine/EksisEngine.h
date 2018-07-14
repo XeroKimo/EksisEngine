@@ -5,6 +5,8 @@
 #include "ETextureManager.h"
 #include "EEngineTimer.h"
 #include "ECamera.h"
+#include "EPhysicsEngine.h"
+#include "EInput.h"
 
 class EksisEngine
 {
@@ -13,11 +15,16 @@ public:
 
 	bool Run();
 	void Shutdown();
+
 	ED3DHelper* GetD3DHelper();
 	EShader* GetShader();
 	EWindow* GetWindow();
+
 	ETextureManager* GetTextureManager();
 	ECamera* GetCamera();
+	EPhysicsEngine* GetPhysicsEngine();
+
+	EInput* GetInput();
 
 private:
 	EksisEngine();
@@ -31,6 +38,8 @@ private:
 	ETextureManager* m_textureManager;
 	EEngineTimer m_engineTimer;
 	ECamera* m_camera;
+	EPhysicsEngine* m_physicsEngine;
+	EInput* m_input;
 };
 
 int GetClientHeight();
@@ -38,3 +47,8 @@ int GetClientWidth();
 void LoadTexture(const wchar_t* imageFile);
 void UnloadTexture(const wchar_t* imageFile);
 ECamera* GetCamera();
+EPhysicsEngine* GetPhysicsEngine();
+bool IsKeyInactive(EKeyCode key);
+bool IsKeyUp(EKeyCode key);
+bool IsKeyDown(EKeyCode key);
+bool IsKeyHeld(EKeyCode key);

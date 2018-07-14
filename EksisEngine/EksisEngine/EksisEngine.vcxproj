@@ -118,13 +118,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Box.cpp" />
     <ClCompile Include="ECamera.cpp" />
+    <ClCompile Include="EController.cpp" />
     <ClCompile Include="ED3DHelper.cpp" />
     <ClCompile Include="EDirectXHelper.cpp" />
     <ClCompile Include="EEngineTimer.cpp" />
+    <ClCompile Include="EInput.cpp" />
+    <ClCompile Include="EKeyboard.cpp" />
     <ClCompile Include="EksisEngine.cpp" />
+    <ClCompile Include="EMath.cpp" />
     <ClCompile Include="EMatrix.cpp" />
     <ClCompile Include="EMesh.cpp" />
+    <ClCompile Include="EMouse.cpp" />
+    <ClCompile Include="EPhysics.cpp" />
+    <ClCompile Include="EPhysicsEngine.cpp" />
     <ClCompile Include="ERenderable.cpp" />
     <ClCompile Include="EScreenManager.cpp" />
     <ClCompile Include="EShader.cpp" />
@@ -136,14 +144,26 @@
     <ClCompile Include="EWindow.cpp" />
     <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="ScreenInit.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Box.h" />
     <ClInclude Include="ECamera.h" />
+    <ClInclude Include="EController.h" />
     <ClInclude Include="EEngineTimer.h" />
+    <ClInclude Include="EInput.h" />
+    <ClInclude Include="EKeyboard.h" />
+    <ClInclude Include="EKeyCodes.h" />
     <ClInclude Include="EMath.h" />
+    <ClInclude Include="EMathLib.h" />
+    <ClInclude Include="EMouse.h" />
+    <ClInclude Include="EngineDefaults.h" />
     <ClInclude Include="EngineFiles.h" />
+    <ClInclude Include="EPhysics.h" />
+    <ClInclude Include="EPhysicsEngine.h" />
     <ClInclude Include="ERenderable.h" />
     <ClInclude Include="ED3DHelper.h" />
     <ClInclude Include="EDirectXHelper.h" />
@@ -159,6 +179,8 @@
     <ClInclude Include="EMatrix.h" />
     <ClInclude Include="EShader.h" />
     <ClInclude Include="GameScreen.h" />
+    <ClInclude Include="Platform.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="ScreenInit.h" />
   </ItemGroup>

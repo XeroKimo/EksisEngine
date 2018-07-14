@@ -9,6 +9,7 @@
 #define KEY_INACTIVE 0
 #define KEY_DOWN 1
 #define KEY_UP 2
+#define KEY_HELD 3
 
 class EController
 {

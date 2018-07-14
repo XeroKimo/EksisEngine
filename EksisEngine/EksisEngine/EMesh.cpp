@@ -110,6 +110,30 @@ void EMesh::Render()
 	EksisEngine::GetInstance()->GetD3DHelper()->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
+void EMesh::SetDimensions(float width, float height)
+{
+	D3D11_BUFFER_DESC vertexBufferDesc;
+	D3D11_SUBRESOURCE_DATA vertexData;
+
+	m_vertices[0].position = EVector(0.0f, 0.0f);
+	m_vertices[1].position = EVector(0.0f, height);
+	m_vertices[2].position = EVector(width, height);
+	m_vertices[3].position = EVector(width, 0.0f);
+
+	vertexBufferDesc.ByteWidth = sizeof(VertexType)*m_vertexCount;
+	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	vertexBufferDesc.CPUAccessFlags = 0;
+	vertexBufferDesc.MiscFlags = 0;
+	vertexBufferDesc.StructureByteStride = 0;
+
+	vertexData.pSysMem = m_vertices;
+	vertexData.SysMemPitch = 0;
+	vertexData.SysMemSlicePitch = 0;
+
+	EksisEngine::GetInstance()->GetD3DHelper()->GetDevice()->CreateBuffer(&vertexBufferDesc, &vertexData, &m_vertexBuffer);
+}
+
 void EMesh::SetColor(float red, float green,float blue, float alpha)
 {
 	D3D11_BUFFER_DESC vertexBufferDesc; 

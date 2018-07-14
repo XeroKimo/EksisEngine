@@ -1,4 +1,5 @@
 #include "EEngineTimer.h"
+#include "EngineDefaults.h"
 #include <Windows.h>
 #include <WinBase.h>
 
@@ -7,8 +8,8 @@ EEngineTimer::EEngineTimer() :
 	m_elapsedTime(0.0),
 	m_currentTime(0.0),
 	m_previousTime(0.0),
-	m_limitFrames(false),
-	m_targetFrameTime(0.0016)
+	m_limitFrames(LIMIT_FPS),
+	m_targetFrameTime(0.0)
 
 {
 }
@@ -33,7 +34,7 @@ bool EEngineTimer::CanTick()
 {
 	if (m_limitFrames == true)
 	{
-		double frameTime = (GetTime() - m_currentTime) * 1000.0;
+		double frameTime = (GetTime() - m_currentTime)*1000.0;
 		if (frameTime < m_targetFrameTime)
 		{
 			return false;
