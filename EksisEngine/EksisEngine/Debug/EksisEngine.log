@@ -1,7 +1,6 @@
-﻿  GameScreen.cpp
-c:\users\renzy\desktop\eksis engine code\experimental\eksisengine\eksisengine\gamescreen.cpp(38): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-c:\users\renzy\desktop\eksis engine code\experimental\eksisengine\eksisengine\gamescreen.cpp(40): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  ECamera.cpp
-c:\users\renzy\desktop\eksis engine code\experimental\eksisengine\eksisengine\ecamera.cpp(6): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Generating Code...
+﻿  EPhysicsEngine.cpp
+c:\users\renzy\desktop\eksis engine code\experimental\eksisengine\eksisengine\ephysicsengine.cpp(50): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\renzy\desktop\eksis engine code\experimental\eksisengine\eksisengine\ephysicsengine.cpp(227): warning C4018: '<': signed/unsigned mismatch
+c:\users\renzy\desktop\eksis engine code\experimental\eksisengine\eksisengine\ephysicsengine.cpp(248): warning C4018: '<': signed/unsigned mismatch
+c:\users\renzy\desktop\eksis engine code\experimental\eksisengine\eksisengine\ephysicsengine.cpp(185): warning C4715: 'EPhysicsEngine::CorrectHitBox': not all control paths return a value
   EksisEngine.vcxproj -> C:\Users\Renzy\Desktop\Eksis Engine Code\Experimental\EksisEngine\Debug\EksisEngine.exe

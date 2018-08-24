@@ -1,11 +1,12 @@
 #include "EDirectXHelper.h"
+#include "EngineDefaults.h"
 
 EDirectXHelper::EDirectXHelper()
 	: m_deviceContext(nullptr)
 	, m_swapChain(nullptr)
-	, m_VSyncEnabled(false)
-	, m_FPSCapEnabled(false)
-	, m_FPSLimit(0)
+	, m_VSyncEnabled(SET_VSYNC)
+	, m_FPSCapEnabled(LIMIT_FPS)
+	, m_FPSLimit(FPS_LIMIT)
 	, m_device(nullptr)
 {
 }

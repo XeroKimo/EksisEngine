@@ -6,6 +6,8 @@ public:
 	EEngineTimer();
 	void Tick();
 	bool CanTick();
+	bool Ticked();
+
 	double GetTime();
 	double GetTimerFrequency();
 
@@ -17,7 +19,7 @@ public:
 private:
 	bool m_firstFrame;
 	bool m_limitFrames;
-
+	bool m_ticked;
 
 	double m_deltaTime;
 	double m_elapsedTime;
