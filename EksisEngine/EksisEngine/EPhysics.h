@@ -28,11 +28,11 @@ public:
 
 	void SetVelocity(EVector velocity);
 	void SetVelocity(float x, float y);
-	void SetInstantVelocity(EVector velocity);
-	void SetInstantVelocity(float x, float y);
+	//void SetInstantVelocity(EVector velocity);
+	//void SetInstantVelocity(float x, float y);
 	EVector GetVelocity();
-	EVector GetInstantVelocity();
-	EVector GetTotalVelocity();
+	//EVector GetInstantVelocity();
+	//EVector GetTotalVelocity();
 
 	void ApplyForce(EVector acceleration);
 	void ApplyForce(float x, float y);
@@ -76,8 +76,8 @@ protected:
 	bool p_inAir;
 
 	EVector p_velocity;
-	EVector p_instantVelocity;
-	EVector p_totalVelocity;
+	//EVector p_instantVelocity;
+	//EVector p_totalVelocity;
 	float p_mass;
 
 	

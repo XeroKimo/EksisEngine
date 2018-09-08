@@ -24,21 +24,22 @@ void Player::Update(double delta)
 	m_player.SetPosition(GetHitboxPosition());
 	EVector currentPos = m_player.GetPosition() - GetHitboxOffset();
 	MovePlayer(delta);
-	p_totalVelocity =  p_velocity + p_instantVelocity;
-	p_instantVelocity = p_instantVelocity * EVector(0.95, 0.95);
-	if (p_instantVelocity.x < 0.0001)
-	{
-		p_instantVelocity.x = 0;
-	}
-	if (p_instantVelocity.y < 0.0001)
-	{
-		p_instantVelocity.y = 0;
-	}
-	currentPos += p_totalVelocity;
+	//p_totalVelocity =  p_velocity + p_instantVelocity;
+	//p_instantVelocity = p_instantVelocity * EVector(0.95, 0.95);
+	//if (p_instantVelocity.x < 0.0001)
+	//{
+	//	p_instantVelocity.x = 0;
+	//}
+	//if (p_instantVelocity.y < 0.0001)
+	//{
+	//	p_instantVelocity.y = 0;
+	//}
+	std::cout << "Player Velocity: " << p_velocity.x << " || " <<p_velocity.y << std::endl;
+	currentPos += p_velocity;
 	m_player.SetPosition(currentPos);
 	SetHitboxPosition(currentPos + GetHitboxOffset());
 	//std::cout << currentPos.x << " || " << currentPos.y << " player " << std::endl;
-	std::cout << p_totalVelocity.x << " || " <<p_totalVelocity.y << " player " << std::endl;
+	//std::cout << p_totalVelocity.x << " || " <<p_totalVelocity.y << " player " << std::endl;
 	//std::cout << GetHitboxPosition().x << " || " << GetHitboxPosition().y << std::endl;
 	//if (!p_inAir)
 	//{
@@ -72,11 +73,21 @@ void Player::MovePlayer(double delta)
 {
 	if (IsKeyDown(EKeyCode::D) || IsKeyHeld(EKeyCode::D))
 	{
-		p_velocity = EVector(m_maxSpeed * delta, p_velocity.y);
+		if (p_velocity.x < m_maxSpeed *delta + 0.1)
+			p_velocity = EVector(m_maxSpeed * delta, p_velocity.y);
+		else
+		{
+			p_velocity = p_velocity;
+		}
 	}
 	if (IsKeyDown(EKeyCode::A) || IsKeyHeld(EKeyCode::A))
 	{
-		p_velocity = EVector(-m_maxSpeed * delta, p_velocity.y);
+		if (p_velocity.x > -m_maxSpeed *delta - 0.1)
+			p_velocity = EVector(-m_maxSpeed * delta, p_velocity.y);
+		else
+		{
+			p_velocity = p_velocity;
+		}
 	}
 	if (IsKeyInactive(EKeyCode::D) && IsKeyInactive(EKeyCode::A))
 	{

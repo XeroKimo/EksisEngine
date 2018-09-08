@@ -81,8 +81,26 @@ void EPhysicsEngine::MoveObjects(double delta, EPhysics* object1, EPhysics* obje
 {
 	if ((object1->GetFlag() & MOVEABLE)&& (object2->GetFlag() & MOVEABLE))
 	{
-		object1->SetInstantVelocity(object2->GetTotalVelocity() - object1->GetInstantVelocity());
-		object2->SetInstantVelocity(object1->GetTotalVelocity() - object2->GetInstantVelocity());
+		EVector oldVelocity1 = object1->GetVelocity();
+		EVector oldVelocity2 = object2->GetVelocity();
+		if (oldVelocity1 == EVector(0.0f, 0.0f))
+		{
+			object1->ApplyForce(oldVelocity2);
+		}
+		else
+		{
+			object1->SetVelocity(oldVelocity1 - oldVelocity2);
+		}
+		if (oldVelocity2 == EVector(0.0f, 0.0f))
+		{
+			object2->ApplyForce(oldVelocity1);
+		}
+		else
+		{
+			object2->SetVelocity(oldVelocity2 - oldVelocity1);
+		}
+		/*object1->SetInstantVelocity(object2->GetVelocity() - object1->GetInstantVelocity());
+		object2->SetInstantVelocity(object1->GetVelocity() - object2->GetInstantVelocity());*/
 
 	}
 
@@ -90,66 +108,49 @@ void EPhysicsEngine::MoveObjects(double delta, EPhysics* object1, EPhysics* obje
 
 bool EPhysicsEngine::CheckCollision(EPhysics * object1, EPhysics * object2)
 {
-	int detection = EMath::SquareToSquareDetection(
+	bool detection = EMath::SquareToSquareDetection(
 		object1->GetHitboxPosition(),
 		object2->GetHitboxPosition(),
 		object1->GetHitbox(),
 		object2->GetHitbox());
 	if (detection)
 	{
-		float correctHitBox = CorrectHitBox(object1, object2, detection);
-		if (detection > 2)
+		EVector correctHitBox = EMath::CorrectHitBox(object1->GetHitboxPosition(), object2->GetHitboxPosition(), object1->GetHitbox(),object2->GetHitbox());
+		MoveHitBoxes(object1, object2, correctHitBox);
+		if (abs(correctHitBox.y) < abs(correctHitBox.x))
 		{
-			if (detection == 3)
+			if (correctHitBox.y > 0.0f && (object1->GetFlag() & GRAVITY) && object1->GetHitGround() == false)
 			{
-				if ((object2->GetFlag() & GRAVITY) && object2->GetHitGround() == false)
-				{
-					object2->SetHitGround(true);
-					object2->SetInAir(false);
-				}
-				MoveHitBoxes(object1, object2, correctHitBox, true, 1);
+				object1->SetHitGround(true);
+				(object1)->SetInAir(false);
 			}
-			if (detection == 4)
+			else if (correctHitBox.y <= 0.0f && (object2->GetFlag() & GRAVITY) && object2->GetHitGround() == false)
 			{
-				if ((object1->GetFlag() & GRAVITY) && object1->GetHitGround() == false)
-				{
-					object1->SetHitGround(true);
-					(object1)->SetInAir(false);
-				}
-				MoveHitBoxes(object1, object2, correctHitBox, true, -1);
+				object2->SetHitGround(true);
+				object2->SetInAir(false);
 			}
 			if ((object2->GetFlag() & MOVEABLE) == false || object1->GetHitGround() == true)
 			{
 				object1->SetVelocity(object1->GetVelocity().x, 0.0f);
-				object1->SetInstantVelocity(object1->GetInstantVelocity().x, 0.0f);
+				//object1->SetInstantVelocity(object1->GetInstantVelocity().x, 0.0f);
 			}
 			if ((object1->GetFlag() & MOVEABLE) == false || object2->GetHitGround() == true)
 			{
 				object2->SetVelocity(object2->GetVelocity().x, 0.0f);
-				object2->SetInstantVelocity(object2->GetInstantVelocity().x, 0.0f);
+				//object2->SetInstantVelocity(object2->GetInstantVelocity().x, 0.0f);
 			}
 		}
 		else
 		{
-			if ((object2->GetFlag() & MOVEABLE))
+			if ((object2->GetFlag() & MOVEABLE) == false)
 			{
 				object1->SetVelocity(0.0f, object1->GetVelocity().y);
 			}
-			if ((object1->GetFlag() & MOVEABLE))
+			if ((object1->GetFlag() & MOVEABLE) == false)
 			{
 				object2->SetVelocity(0.0f, object2->GetVelocity().y);
 			}
-			if (detection == 1)
-			{
-				MoveHitBoxes(object1, object2, correctHitBox, false, 1);
-
-			}
-			if (detection == 2)
-			{	
-				MoveHitBoxes(object1, object2, correctHitBox, false, -1);
-			}
 		}
-
 		return true;
 	}
 	return false;
@@ -164,60 +165,41 @@ bool EPhysicsEngine::IgnoreCollision(EPhysics * object1, EPhysics * object2)
 	return false;
 }
 
-float EPhysicsEngine::CorrectHitBox(EPhysics * object1, EPhysics * object2, int axis)
+void EPhysicsEngine::MoveHitBoxes(EPhysics * object1, EPhysics * object2, EVector distance)
 {
-	if (axis == 1)
+	if (abs(distance.x) < abs(distance.y))
 	{
-		return EMath::xAxisCheck(object1->GetHitboxPosition(), object2->GetHitboxPosition(), object1->GetHitbox(), object2->GetHitbox());
-	}
-	else if (axis == 2)
-	{
-		return EMath::xAxisCheck(object2->GetHitboxPosition(), object1->GetHitboxPosition(), object2->GetHitbox(), object1->GetHitbox());
-	}	
-	else if (axis == 3)
-	{
-		return EMath::yAxisCheck(object1->GetHitboxPosition(), object2->GetHitboxPosition(), object1->GetHitbox(), object2->GetHitbox());
-	}
-	else if (axis == 4)
-	{
-		return EMath::yAxisCheck(object2->GetHitboxPosition(), object1->GetHitboxPosition(), object2->GetHitbox(), object1->GetHitbox());
-	}
-}
-
-void EPhysicsEngine::MoveHitBoxes(EPhysics * object1, EPhysics * object2, float distance, bool yAxis, int side)
-{
-	if (yAxis)
-	{
-		if ((object1->GetFlag() & MOVEABLE) && (object2->GetFlag() & MOVEABLE))
+		if (object1->GetVelocity() != EVector(0.0f,0.0f))
 		{
-			float half = distance / 2;
-			object1->SetHitboxPosition(object1->GetHitboxPosition().x, object1->GetHitboxPosition().y + half * -side);
-			object2->SetHitboxPosition(object2->GetHitboxPosition().x, object2->GetHitboxPosition().y + half * side);
+			object1->SetHitboxPosition(object1->GetHitboxPosition().x + distance.x, object1->GetHitboxPosition().y);
 		}
-		else if ((object1->GetFlag() & MOVEABLE))
+		else if (object2->GetVelocity() != EVector(0.0f, 0.0f))
 		{
-			object1->SetHitboxPosition(object1->GetHitboxPosition().x, object1->GetHitboxPosition().y + distance * -side);
+			object2->SetHitboxPosition(object2->GetHitboxPosition().x - distance.x, object2->GetHitboxPosition().y);
 		}
 		else
 		{
-			object2->SetHitboxPosition(object2->GetHitboxPosition().x, object2->GetHitboxPosition().y + distance * side);
+			float half = distance.x / 2;
+			object1->SetHitboxPosition(object1->GetHitboxPosition().x + half, object1->GetHitboxPosition().y);
+			object2->SetHitboxPosition(object2->GetHitboxPosition().x - half, object2->GetHitboxPosition().y);
 		}
 	}
 	else
 	{
-		if ((object1->GetFlag() & MOVEABLE) && (object2->GetFlag() & MOVEABLE))
+
+		if (object1->GetVelocity() != EVector(0.0f, 0.0f))
 		{
-			float half = distance / 2;
-			object1->SetHitboxPosition(object1->GetHitboxPosition().x + half * -side, object1->GetHitboxPosition().y);
-			object2->SetHitboxPosition(object2->GetHitboxPosition().x + half * side, object2->GetHitboxPosition().y);
+			object1->SetHitboxPosition(object1->GetHitboxPosition().x , object1->GetHitboxPosition().y + distance.y);
 		}
-		else if ((object1->GetFlag() & MOVEABLE))
+		else if (object2->GetVelocity() != EVector(0.0f, 0.0f))
 		{
-			object1->SetHitboxPosition(object1->GetHitboxPosition().x + distance * -side, object1->GetHitboxPosition().y);
+			object2->SetHitboxPosition(object2->GetHitboxPosition().x , object2->GetHitboxPosition().y - distance.y);
 		}
 		else
 		{
-			object2->SetHitboxPosition(object2->GetHitboxPosition().x + distance * side, object2->GetHitboxPosition().y);
+			float half = distance.y / 2;
+			object1->SetHitboxPosition(object1->GetHitboxPosition().x, object1->GetHitboxPosition().y + half);
+			object2->SetHitboxPosition(object2->GetHitboxPosition().x, object2->GetHitboxPosition().y - half);
 		}
 	}
 }

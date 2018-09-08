@@ -59,30 +59,30 @@ void EPhysics::SetVelocity(float x, float y)
 	p_velocity = EVector(x, y);
 }
 
-void EPhysics::SetInstantVelocity(EVector velocity)
-{
-	p_instantVelocity = velocity;
-}
-
-void EPhysics::SetInstantVelocity(float x, float y)
-{
-	p_instantVelocity = EVector(x, y);
-}
+//void EPhysics::SetInstantVelocity(EVector velocity)
+//{
+//	p_instantVelocity = velocity;
+//}
+//
+//void EPhysics::SetInstantVelocity(float x, float y)
+//{
+//	p_instantVelocity = EVector(x, y);
+//}
 
 EVector EPhysics::GetVelocity()
 {
 	return p_velocity;
 }
 
-EVector EPhysics::GetInstantVelocity()
-{
-	return p_instantVelocity;
-}
-
-EVector EPhysics::GetTotalVelocity()
-{
-	return p_totalVelocity;
-}
+//EVector EPhysics::GetInstantVelocity()
+//{
+//	return p_instantVelocity;
+//}
+//
+//EVector EPhysics::GetTotalVelocity()
+//{
+//	return p_totalVelocity;
+//}
 
 void EPhysics::ApplyForce(EVector acceleration)
 {

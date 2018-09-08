@@ -12,7 +12,7 @@ public:
 	virtual void Unload() = 0;
 	virtual void Update(double delta) = 0;
 	virtual void Render() = 0;
-	virtual void Input() = 0;
+	virtual void Input(EInput* input) = 0;
 	virtual void Shutdown() = 0;
 	virtual ScreenID GetID() = 0;
 };

@@ -11,22 +11,21 @@ GameScreen::~GameScreen()
 
 void GameScreen::Load()
 {
-	LoadTexture(L"Bank.png");
-	LoadTexture(L"asteroid.png");
 
-	
-	player.SetDimensions(128.0f, 128.0f);
-	platform.SetDimensions(640.0f, 64.0f);
-	platform.SetColor(1.0f, 0.0f, 0.0f);
-	player.SetColor(0.0f, 1.0f, 0.0f);
+	m_player1.SetPosition(EVector(0.0f,300.0f));
+	//m_player1.SetHitboxPosition(m_player1.GetSquare().GetPosition());
+	m_player1.SetMass(1.0f);
 
-	bank.SetTexture(L"Bank.png");
-	asteroid.SetTexture(L"asteroid.png");
-	radians = 0.0f;
+	m_platform1.GetSquare().SetDimensions(EVector(640.0f, 128.0f));
+	m_platform1.SetHitbox(m_platform1.GetSquare().GetDimension());
 
-	GetCamera()->AttachCameraToObject(&player);
-	GetCamera()->AttachElementToCamera(&asteroid);
+	m_platform2.GetSquare().SetDimensions(128.0f, 128.0f);
+	m_platform2.SetHitbox(m_platform2.GetSquare().GetDimension());
+	m_platform2.GetSquare().SetPosition(512.0f,128.0f);
 
+	//m_box1.SetPosition(EVector(0.0f,128.0f));
+	m_box1.SetPosition(EVector(300.0f, 500.0f));
+	GetCamera()->AttachCameraToObject(&m_player1.GetSquare());
 }
 
 void GameScreen::Unload()
@@ -35,26 +34,23 @@ void GameScreen::Unload()
 
 void GameScreen::Update(double delta)
 {
-	radians += 1.0f*delta;
-
-	position = position + EVector(10.0* delta, 10.0* delta) ;
-	player.SetPosition(position);
-	player.SetOrigin(0.5f, 0.5f);
-	player.SetRotation(radians);
-	asteroid.SetOrigin(0.5f, 0.5f);
-	asteroid.SetRotation(radians);
+	m_player1.Update(delta);
+	m_platform1.Update(delta);
+	m_platform2.Update(delta);
+	m_box1.Update(delta);
 }
 
 void GameScreen::Render()
 {
-	player.Render();
-	asteroid.Render();
-	platform.Render();
-	bank.Render();
+	m_player1.Render();
+	m_platform1.Render();
+	m_platform2.Render();
+	m_box1.Render();
 }
 
-void GameScreen::Input()
+void GameScreen::Input(EInput* input)
 {
+	m_player1.Input(input);
 }
 
 void GameScreen::Shutdown()

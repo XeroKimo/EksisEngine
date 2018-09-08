@@ -26,8 +26,7 @@ private:
 	bool CheckCollision(EPhysics* object1, EPhysics* object2);
 	bool IgnoreCollision(EPhysics* object1, EPhysics* object2);
 
-	float CorrectHitBox(EPhysics* object1, EPhysics* object2, int axis);
-	void MoveHitBoxes(EPhysics* object1, EPhysics* object2, float distance, bool yAxis, int side);
+	void MoveHitBoxes(EPhysics* object1, EPhysics* object2, EVector distance);
 	
 	void RemoveGravity(EPhysics* object);
 	void RemoveCollidable(EPhysics* object);
